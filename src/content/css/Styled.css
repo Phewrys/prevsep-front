@@ -1,0 +1,129 @@
+
+.bottom-left {
+    color: black;
+    bottom: 10px;
+    position: fixed;
+    left: 15px;
+    font-weight: 600;
+}
+
+.bottom-right {
+    color: black;
+    bottom: 10px;
+    position: fixed;
+    right: 15px;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #a2f5b9;
+    background: #103c6e;
+    border-left: 3px solid #a2f5b9 !important;
+    margin-right: -5px;
+}
+
+.nav-pills .nav-link {
+    background: none;
+    border: 0;
+    border-radius: 0;
+}
+
+.nav-link {
+    font-weight: 600;
+    color: white;
+}
+
+.nav-link:hover {
+    color: #a2f5b9;
+}
+
+body {
+    background: rgb(250, 253, 255);
+}
+
+h2 {
+    color: #174a84;
+}
+
+h4 {
+    color: #4e3883;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.icone {
+    height: 25px;
+    padding-right: 10px;
+}
+
+.top-navigation {
+    position: fixed;
+    height: 57px;
+    width: 100%;
+    border-bottom: 1px solid #d3e6ff;
+    background: white;
+}
+
+.blue-sidebar {
+    background: #0658a6 !important;
+}
+
+.sidebarPage-top {
+    margin-top: 57px;
+}
+
+.page-content > div {
+    padding: 30px;
+}
+
+.div-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.div-content {
+    margin-top: 20px;
+    padding: 5px;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+    box-shadow: 0 0.5rem 1rem #d3e6ff;
+    border: 1px solid #d3e6ff;
+    color: #174a84;
+}
+
+th, td {
+    color: #174a84;
+}
+
+.button-blue {
+    border-radius: 1.50rem;
+    font-size: 14px;
+    font-weight: 600;
+    background: #0658a6;
+    color: white;
+    height: 40px;
+    margin-top: 5px;
+}
+
+.button-blue:hover {
+    color: #a2f5b9;
+    background: #103c6e;
+}
+
+.page-link{
+    border-radius: 50%;
+    margin: 2px;
+}
+
+.page-item:first-child .page-link {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
