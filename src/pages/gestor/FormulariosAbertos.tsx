@@ -6,7 +6,6 @@ export default function FormulariosAbertos() {
         <>
             <div className="div-header">
                 <h2>Formulários Abertos</h2>
-                <button type="button" className="btn button-blue">Novo Formulário +</button>
             </div>
             <div>
                 <div className="div-content">

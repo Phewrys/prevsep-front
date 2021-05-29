@@ -46,6 +46,7 @@ h2 {
 
 h4 {
     color: #4e3883;
+    font-size: calc(1.275rem + 0.1vw);
 }
 
 .logo {
@@ -70,6 +71,7 @@ h4 {
     width: 100%;
     border-bottom: 1px solid #d3e6ff;
     background: white;
+    z-index: 100;
 }
 
 .blue-sidebar {
@@ -92,11 +94,17 @@ h4 {
 
 .div-content {
     margin-top: 20px;
-    padding: 5px;
+    /* padding: 5px; */
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
     box-shadow: 0 0.5rem 1rem #d3e6ff;
     border: 1px solid #d3e6ff;
     color: #174a84;
+}
+
+@media (max-width: 576px) {
+    .div-content {
+        overflow-x: scroll;
+    }
 }
 
 th, td {
@@ -118,6 +126,56 @@ th, td {
     background: #103c6e;
 }
 
+.button-purple {
+    border-radius: 0.1rem;
+    font-size: 14px;
+    font-weight: 600;
+    background: #4e3883;
+    color: white;
+    height: 35px;
+    width: 120px;
+    margin-top: 5px;
+}
+
+.button-purple:hover {
+    color: #f6d5c8;
+    background: #200c52;
+}
+
+.button-yes {
+    color: black;
+    background: #8efba8;
+    font-weight: 600;
+    height: 30px;
+    width: 55px;
+    border-radius: 0.5rem;
+    margin: 5px;
+    padding-bottom: 5px;
+    padding-top: 2px;
+}
+
+.button-yes:hover {
+    color: white;
+    background: #116f28;
+}
+
+.button-no {
+    color: white;
+    background: #f22c2c;
+    font-weight: 600;
+    height: 30px;
+    width: 55px;
+    border-radius: 0.5rem;
+    margin: 5px;
+    padding-bottom: 5px;
+    padding-top: 2px;
+}
+
+.button-no:hover {
+    color: white;
+    background: #6d1010;
+}
+
 .page-link{
     border-radius: 50%;
     margin: 2px;
@@ -126,4 +184,8 @@ th, td {
 .page-item:first-child .page-link {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
+}
+
+.table {
+    margin-bottom: 0;
 }

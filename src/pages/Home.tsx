@@ -6,7 +6,7 @@ export default function Home() {
     <div className="d-flex" id="wrapper">
         {/* Sidebar */}
         <div className="border-end blue-sidebar" id="sidebar-wrapper">
-            <div className="logo"><img src={Logo} alt="Logo HU"></img></div>
+            <div className="logo"><a href="./home"><img src={Logo} alt="Logo HU"></img></a></div>
             <div className="list-group list-group-flush sidebarPage-top">
             <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a className="nav-link active" id="id-tab" data-toggle="pill" href="#id" role="tab" aria-controls="id" aria-selected="true">Lorem</a>

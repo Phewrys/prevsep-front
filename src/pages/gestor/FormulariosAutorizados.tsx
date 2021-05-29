@@ -1,12 +1,11 @@
 import ArrowDown from './../../content/img/arrow-down-solid.svg'
 
-export default function FormulariosAbertos() {
+export default function FormulariosAutorizados() {
 
     return (
         <>
             <div className="div-header">
-                <h2>Formulários Abertos</h2>
-                <button type="button" className="btn button-blue">Novo Formulário +</button>
+                <h2>Formulários Autorizados</h2>
             </div>
             <div>
                 <div className="div-content">
@@ -19,6 +18,7 @@ export default function FormulariosAbertos() {
                                 <th scope="col">#</th>
                                 <th scope="col">Nº Formulário <img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img></th>
                                 <th scope="col">Paciente <img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img></th>
+                                <th scope="col">Enfermeiro Responsável <img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img></th>
                                 <th scope="col">Data de Criação <img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img></th>
                                 <th scope="col">Data de Autorização <img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img></th>
                             </tr>
@@ -28,12 +28,14 @@ export default function FormulariosAbertos() {
                                 <th scope="row">1</th>
                                 <td>000000</td>
                                 <td>Xxxxx Xxxxx</td>
+                                <td>Xxxxx Xxxxx</td>
                                 <td>00/00/0000 00:00:00</td>
                                 <td>00/00/0000 00:00:00</td>
                             </tr>
                             <tr>
                                 <th scope="row">2</th>
                                 <td>000000</td>
+                                <td>Xxxxx Xxxxx</td>
                                 <td>Xxxxx Xxxxx</td>
                                 <td>00/00/0000 00:00:00</td>
                                 <td>00/00/0000 00:00:00</td>
@@ -42,6 +44,7 @@ export default function FormulariosAbertos() {
                                 <th scope="row">3</th>
                                 <td>000000</td>
                                 <td>Xxxxx Xxxxx</td>
+                                <td>Xxxxx Xxxxx</td>
                                 <td>00/00/0000 00:00:00</td>
                                 <td>00/00/0000 00:00:00</td>
                             </tr>
@@ -49,12 +52,14 @@ export default function FormulariosAbertos() {
                                 <th scope="row">4</th>
                                 <td>000000</td>
                                 <td>Xxxxx Xxxxx</td>
+                                <td>Xxxxx Xxxxx</td>
                                 <td>00/00/0000 00:00:00</td>
                                 <td>00/00/0000 00:00:00</td>
                             </tr>
                             <tr>
                                 <th scope="row">5</th>
                                 <td>000000</td>
+                                <td>Xxxxx Xxxxx</td>
                                 <td>Xxxxx Xxxxx</td>
                                 <td>00/00/0000 00:00:00</td>
                                 <td>00/00/0000 00:00:00</td>

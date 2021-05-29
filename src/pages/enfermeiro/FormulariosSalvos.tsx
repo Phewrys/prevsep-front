@@ -1,11 +1,11 @@
 import ArrowDown from './../../content/img/arrow-down-solid.svg'
 
-export default function FormulariosAbertos() {
+export default function FormulariosSalvos() {
 
     return (
         <>
             <div className="div-header">
-                <h2>Formulários Abertos</h2>
+                <h2>Formulários Salvos</h2>
                 <button type="button" className="btn button-blue">Novo Formulário +</button>
             </div>
             <div>
