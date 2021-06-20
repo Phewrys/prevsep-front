@@ -1,6 +1,7 @@
 import FormulariosAbertos from './FormulariosAbertos'
 import FormulariosSalvos from './FormulariosSalvos'
 import FormulariosEnviados from './FormulariosEnviados'
+import PreencherFormulario from './PreencherFormulario'
 
 import Logo from './../../content/img/uh-ufs.jpg'
 import IconeEmAberto from './../../content/img/em_aberto_branco.png'
@@ -41,7 +42,7 @@ export default function Medico() {
                 <div className="tab-content page-content" id="v-pills-tabContent">
                     <div className="tab-pane fade show active" id="formulariosAbertos" role="tabpanel" aria-labelledby="formulariosAbertos-tab"><FormulariosAbertos /></div>
                     <div className="tab-pane fade" id="formulariosEnviados" role="tabpanel" aria-labelledby="formulariosEnviados-tab"><FormulariosEnviados /></div>
-                    <div className="tab-pane fade" id="preencherFormulario" role="tabpanel" aria-labelledby="preencherFormulario-tab">Preencher Formulário</div>
+                    <div className="tab-pane fade" id="preencherFormulario" role="tabpanel" aria-labelledby="preencherFormulario-tab"><PreencherFormulario /></div>
                     <div className="tab-pane fade" id="formulariosSalvos" role="tabpanel" aria-labelledby="formulariosSalvos-tab"><FormulariosSalvos /></div>
                     <div className="tab-pane fade" id="visualizarFormulario" role="tabpanel" aria-labelledby="visualizarFormulario-tab">Visualizar Formulário</div>
                 </div>
