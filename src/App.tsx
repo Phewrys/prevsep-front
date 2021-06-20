@@ -1,13 +1,14 @@
 
 import { BrowserRouter } from 'react-router-dom'
-import Routes from './Routes'
-import Footer from './components/Footer'
+import Routes from './routes'
+import { AuthProvider } from './context/AuthContext'
 
 export default function App() {  
   return (
     <BrowserRouter>
-      <Routes />
-      <Footer />
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </BrowserRouter>
   );
 }
