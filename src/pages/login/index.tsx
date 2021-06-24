@@ -13,27 +13,30 @@ const Login: React.FC = () => {
         async (event) => {
             event.preventDefault();
 
-            await signIn({ username, password });
+            const x = document.getElementById('loader')
+            x?.classList.toggle('loader')
+            
+            setTimeout(function() {
+                signIn({ username, password });
+            }, 3000)
+
+            setTimeout(function() {
+                x?.classList.toggle('loader')
+            }, 3000)
         },
         [username, password]
     );
 
     return (
-        <form className="container" onSubmit={handleSubmit}>
-            <div className="form-group">
-                <label htmlFor="">Usuário </label>
-                <input type="text" onChange={event => setUsername(event.target.value)} />
-            </div>
-
-            <div className="form-group">
-                <label htmlFor="">Senha </label>
-                <input type="password" onChange={event => setPassword(event.target.value)} />
-            </div>
-
-            <div className="form-group">
-                <button type="submit">Entrar</button>
-            </div>
-        </form>
+        <div className="main">
+            <div id="loader" className=""></div>
+            <form className="login" onSubmit={handleSubmit}>
+                <h1>PrevSep+</h1>
+                <input type="text" placeholder="Usuário" autoComplete="off" onChange={event => setUsername(event.target.value)} required />
+                <input type="password" placeholder="Senha" autoComplete="off" onChange={event => setPassword(event.target.value)} required />
+                <button id="btn" type="submit">Entrar</button>
+            </form>
+        </div>
     )
 };
 
