@@ -1,6 +1,5 @@
 import { Switch, Route, Redirect } from 'react-router'
 
-import Home from '../pages/Home'
 import Gestor from '../pages/gestor/Gestor'
 import Medico from '../pages/medico/Medico'
 import Enfermeiro from '../pages/enfermeiro/Enfermeiro'

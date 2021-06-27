@@ -10,7 +10,7 @@ import IconeEmAberto from './../../content/img/em_aberto_branco.png'
 import IconeSalvos from './../../content/img/salvos_branco.png'
 import IconeEnviados from './../../content/img/enviados_branco.png'
 import IconeAutorizados from './../../content/img/autorizados_branco.png'
-import IconeAutorizarLogin from './../../content/img/autorizar_login_branco.png'
+// import IconeAutorizarLogin from './../../content/img/autorizar_login_branco.png'
 import IconeDados from './../../content/img/dados_branco.png'
 
 export default function Enfermeiro() {

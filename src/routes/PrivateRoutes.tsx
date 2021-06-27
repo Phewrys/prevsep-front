@@ -5,7 +5,7 @@ interface RoutesPropsData extends RouteProps {
     roleName?: string;
 }
 
-const PrivateRoutes: React.FC<RoutesPropsData> = ({ roleName, ... rest }) => {
+const PrivateRoutes: React.FC<RoutesPropsData> = ({ roleName, ...rest }) => {
     
     const { userLogged } = useAuth();
     const { role } = useAuth();

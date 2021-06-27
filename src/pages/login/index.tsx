@@ -24,12 +24,13 @@ const Login: React.FC = () => {
                 x?.classList.toggle('loader')
             }, 3000)
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [username, password]
     );
 
     return (
         <div className="main">
-            <div id="loader" className=""></div>
+            <div id="loader"></div>
             <form className="login" onSubmit={handleSubmit}>
                 <h1>PrevSep+</h1>
                 <input type="text" placeholder="Usuário" autoComplete="off" onChange={event => setUsername(event.target.value)} required />

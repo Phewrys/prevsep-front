@@ -28,7 +28,7 @@ const AuthContext = createContext<AuthContextState>({} as AuthContextState);
 const AuthProvider: React.FC = ({children}) => {
 
     const [role, setRole] = useState<RoleState>(() => {
-        const role = localStorage.getItem('@PermissionPS:role'); // RECEBE A role DO localStorage.
+        const role = localStorage.getItem('@PermissionPS:role');
         
         if(role) {
             return { role }
@@ -62,7 +62,7 @@ const AuthProvider: React.FC = ({children}) => {
           url: 'https://prevsep.herokuapp.com/oauth/token',
           headers: {
             'Accept': 'application/json, text/plain, /',
-            'Authorization': "Basic " + `${decode}`
+            'Authorization': `Basic ${decode}`
           },
           data : data
         };
@@ -77,6 +77,8 @@ const AuthProvider: React.FC = ({children}) => {
           const { roleName } = response.data.claims[0];
           setRole(roleName);
           localStorage.setItem("@PermissionPS:role", roleName);
+          
+          sessionStorage.setItem("@PermissionPS:username", username);
 
           // REDIRECIONA O USUÁRIO PARA A ROTA QUE ELE TEM PERMISSÃO
           document.location.href = document.location.href + response.data.claims[0].roleName;
