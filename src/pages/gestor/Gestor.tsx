@@ -11,8 +11,16 @@ import IconeEmAberto from './../../content/img/em_aberto_branco.png'
 import IconeAutorizados from './../../content/img/autorizados_branco.png'
 import IconeAutorizarLogin from './../../content/img/autorizar_login_branco.png'
 import IconeDados from './../../content/img/dados_branco.png'
+import FormulariosAbertos from '../enfermeiro/FormulariosAbertos'
 
 export default function Gestor() {
+
+    function Sair() {
+        localStorage.removeItem("@PermissionPS:role");
+        localStorage.removeItem("@PermissionPS:token");
+        sessionStorage.removeItem("@PermissionPS:username");
+        document.location.href = document.location.href + ''
+    }
 
     return (
         <div className="d-flex" id="wrapper">
@@ -38,13 +46,15 @@ export default function Gestor() {
                 <nav className="navbar navbar-expand-lg navbar-light top-navigation">
                     <div className="container-fluid">
                         <button className="btn navbar-toggler" id="sidebarToggle"><span className="navbar-toggler-icon"></span></button>
-                        <div></div>
+                        <div>
+                            <button id="btn-sair" type="button" className="btn button-blue" onClick={() => Sair()} >Sair</button>
+                        </div>
                     </div>
                 </nav>
                 {/* Page content */}
                 <div className="container-fluid sidebarPage-top">
                     <div className="tab-content page-content" id="v-pills-tabContent">
-                        <div className="tab-pane fade show active" id="formulariosAbertos" role="tabpanel" aria-labelledby="formulariosAbertos-tab"><Request /> </div>
+                        <div className="tab-pane fade show active" id="formulariosAbertos" role="tabpanel" aria-labelledby="formulariosAbertos-tab"><FormulariosAbertos /></div>
                         <div className="tab-pane fade" id="formulariosAutorizados" role="tabpanel" aria-labelledby="formulariosAutorizados-tab"><FormulariosAutorizados /></div>
                         <div className="tab-pane fade" id="autorizarLogin" role="tabpanel" aria-labelledby="autorizarLogin-tab"><AutorizarLogin /></div>
                         <div className="tab-pane fade" id="visualizarDados" role="tabpanel" aria-labelledby="visualizarDados-tab">Visualizar Dados</div>

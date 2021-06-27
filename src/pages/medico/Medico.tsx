@@ -12,7 +12,14 @@ import IconeAutorizarLogin from './../../content/img/autorizar_login_branco.png'
 import IconeDados from './../../content/img/dados_branco.png'
 
 export default function Medico() {
-
+    
+    function Sair() {
+        localStorage.removeItem("@PermissionPS:role");
+        localStorage.removeItem("@PermissionPS:token");
+        sessionStorage.removeItem("@PermissionPS:username");
+        document.location.href = document.location.href + ''
+    }
+    
     return(
     <div className="d-flex" id="wrapper">
         {/* Sidebar */}
@@ -34,7 +41,9 @@ export default function Medico() {
             <nav className="navbar navbar-expand-lg navbar-light top-navigation">
                 <div className="container-fluid">
                     <button className="btn navbar-toggler" id="sidebarToggle"><span className="navbar-toggler-icon"></span></button>
-                    <div></div>
+                    <div>
+                        <button id="btn-sair" type="button" className="btn button-blue" onClick={() => Sair()} >Sair</button>
+                    </div>
                 </div>
             </nav>
             {/* Page content */}
