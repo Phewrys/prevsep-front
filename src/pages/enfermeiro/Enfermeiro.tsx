@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import FormulariosAbertos from './FormulariosAbertos'
 import FormulariosParaAutorizacao from './FormulariosParaAutorizacao'
 import FormulariosSalvos from './FormulariosSalvos'
@@ -13,7 +14,15 @@ import IconeAutorizados from './../../content/img/autorizados_branco.png'
 // import IconeAutorizarLogin from './../../content/img/autorizar_login_branco.png'
 import IconeDados from './../../content/img/dados_branco.png'
 
+var axios = require('axios')
+var qs = require('qs')
+
 export default function Enfermeiro() {
+
+    let [cre, setCre] = useState('')
+    let [cpf, setCpf] = useState('')
+    let [nome, setNome] = useState('')
+    let [email, setEmail] = useState('')
 
     function Sair() {
         localStorage.removeItem("@PermissionPS:role");
@@ -21,6 +30,37 @@ export default function Enfermeiro() {
         sessionStorage.removeItem("@PermissionPS:username");
         document.location.href = document.location.href + ''
     }
+
+    // GET: /api/v1/nurses/{cpf} - Returns info about a Nurse by a given CPF.
+    useEffect(() => {
+        const token = localStorage.getItem('@PermissionPS:token');
+        const cpf = sessionStorage.getItem('@PermissionPS:username');
+
+        var data = qs.stringify({
+            'grant_type': 'client_credentials'
+        });
+
+        var config = {
+            method: 'get',
+            url: `https://prevsep.herokuapp.com/api/v1/nurses/${cpf}`,
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response: any) {
+                setCre(response.data.cre)
+                setCpf(response.data.userInfo.cpf)
+                setNome(response.data.userInfo.nome)
+                setEmail(response.data.userInfo.email)
+            })
+            .catch(function (error: any) {
+                console.log(error);
+            });
+    }, [])
 
     return (
         <div className="d-flex" id="wrapper">
@@ -46,8 +86,17 @@ export default function Enfermeiro() {
                 <nav className="navbar navbar-expand-lg navbar-light top-navigation">
                     <div className="container-fluid">
                         <button className="btn navbar-toggler" id="sidebarToggle"><span className="navbar-toggler-icon"></span></button>
-                        <div>
-                            <button id="btn-sair" type="button" className="btn button-blue" onClick={() => Sair()} >Sair</button>
+                        <div id="info" className="dropdown dropleft">
+                            <button className="btn btn-secondary dropdown-toggle info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                INFO
+                            </button>
+                            <div className="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                                <a className="dropdown-item" href=""><strong>CRE:</strong> {cre}</a>
+                                <a className="dropdown-item" href=""><strong>CPF:</strong> {cpf}</a>
+                                <a className="dropdown-item" href=""><strong>NOME:</strong> {nome}</a>
+                                <a className="dropdown-item" href=""><strong>EMAIL:</strong> {email}</a>
+                                <a id="sair" className="dropdown-item" href="" onClick={() => Sair()} >Sair</a>
+                            </div>
                         </div>
                     </div>
                 </nav>

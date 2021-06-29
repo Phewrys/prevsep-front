@@ -106,10 +106,3 @@
         transform: rotate(1turn);
     }
 }
-
-#btn-sair {
-    position: fixed;
-    right: 10px;
-    top: 3px;
-    border-radius: 0.3rem;
-}
