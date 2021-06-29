@@ -185,8 +185,6 @@ export default function CriarFormulario() {
           snlcConfAgtcComa: snlcConfAgtComa,
           saturacaoDispneia: saturacaoDispneia
         },
-        dtAcMedico: "",
-        dtCriacao: Moment(new Date()).format('YYYY-MM-DD'),
         finalizado: finalizado
       }),
       headers: {
@@ -203,10 +201,6 @@ export default function CriarFormulario() {
     timer: 3000,
 }))
 }
-
-// console.log(Moment(new Date()).format('YYYY-MM-DD'))
-// console.log(Moment(new Date(),"currentFormat").format("YYYY-MM-DD"))
-// console.log( Moment(new Date(Date.now())).format('YYYY-MM-DD'))
 
 return (
   <>
@@ -372,11 +366,11 @@ return (
             <div className="d-flex justify-content-start">
               <div className="row">
                 <div className="form-check ml-4">
-                  <input className="form-check-input" type="radio" name="radio" onChange={() => setFinalizado(false)} id="idSalvarSair" />
+                  <input className="form-check-input" type="radio" name="radioVQ" onChange={() => setFinalizado(false)} id="idSalvarSair" />
                   <label className="form-check-label" htmlFor="idSalvarSair">Salvar e Sair</label>
                 </div>
                 <div className="form-check ml-4">
-                  <input className="form-check-input" type="radio" name="radio" onChange={() => setFinalizado(true)} id="idSalvarEnviar" />
+                  <input className="form-check-input" type="radio" name="radioVQ" onChange={() => setFinalizado(true)} id="idSalvarEnviar" />
                   <label className="form-check-label" htmlFor="idSalvarEnviar">Salvar e Enviar</label>
                 </div>
               </div>
