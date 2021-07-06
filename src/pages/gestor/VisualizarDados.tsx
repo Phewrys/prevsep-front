@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import ArrowDown from './../../content/img/arrow-down-solid.svg'
 var axios = require('axios')
 var qs = require('qs')
 
@@ -34,7 +35,7 @@ interface JSONAbertos {
     status: string
 }
 
-export default function FormulariosAbertos() {
+export default function VisualizarDados() {
 
     let [abertos, setAbertos] = useState<JSONAbertos[]>([])
 
@@ -48,7 +49,7 @@ export default function FormulariosAbertos() {
     
         var config = {
           method: 'get',
-          url: 'https://prevsep.herokuapp.com/api/v1/forms/sepse/nurse/form1?status=CREATED',
+          url: 'https://prevsep.herokuapp.com/api/v1/forms/sepse/nurse/form1',
           headers: {
             'accept': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -68,18 +69,19 @@ export default function FormulariosAbertos() {
     return (
         <>
             <div className="div-header">
-                <h2>Formulários Abertos</h2>
+                <h2>Visualizar Dados</h2>
             </div>
             <div>
-                <div className="div-content">
+                <div className="div-content" style={{overflowX: 'scroll'}}>
                     <div className="m-2">
-                        <small>({abertos.length}) Formulários</small>
+                    <small className="mr-3">({abertos.length}) Formulários</small><small><img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img><a href="#">Exportar</a></small>
                     </div>
                     <table className="table table-hover">
                         <thead>
                             <tr>
                                 <th scope="col">Nº Formulário</th>
-                                <th scope="col">Paciente</th>
+                                <th scope="col">Id do Paciente</th>
+                                {/* <th scope="col">Paciente</th> */}
                                 <th scope="col">Data de Criação</th>
                                 <th scope="col">Data de Autorização</th>
                                 <th scope="col">STATUS</th>
@@ -90,6 +92,7 @@ export default function FormulariosAbertos() {
                                 return (
                                     <tr key={aberto.idFormulario}>
                                         <td>{aberto.idFormulario}</td>
+                                        {/* <td>{aberto.paciente.idPaciente}</td> */}
                                         <td>{aberto.paciente.nome}</td>
                                         <td>{aberto.dtCriacao}</td>
                                         <td>{aberto.dtAcMedico}</td>
