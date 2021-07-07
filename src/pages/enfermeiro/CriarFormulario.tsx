@@ -232,7 +232,7 @@ return (
               <div className="form-row">
                 <div className="col-md-6 mb-3">
                   <label htmlFor="idSexo">Sexo*</label>
-                  <select id="idSexo" className="form-control" onChange={event => setSexo(event.target.value)} >
+                  <select id="idSexo" className="form-control" required onChange={event => setSexo(event.target.value)} >
                     <option value="DEFAULT" disabled selected>-- Selecionar --</option>
                     <option value={'Masculino'}>Masculino</option>
                     <option value={'Feminino'}>Feminino</option>

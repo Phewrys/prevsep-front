@@ -4,7 +4,7 @@ import FormulariosSalvos from './FormulariosSalvos'
 import FormulariosEnviados from './FormulariosEnviados'
 import PreencherFormulario from './PreencherFormulario'
 
-import Logo from './../../content/img/uh-ufs.jpg'
+import Logo from './../../content/img/prevsep.png'
 import IconeEmAberto from './../../content/img/em_aberto_branco.png'
 import IconeSalvos from './../../content/img/salvos_branco.png'
 import IconeEnviados from './../../content/img/enviados_branco.png'
