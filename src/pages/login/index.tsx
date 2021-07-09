@@ -15,14 +15,11 @@ const Login: React.FC = () => {
 
             const x = document.getElementById('loader')
             x?.classList.toggle('loader')
-            
-            setTimeout(function() {
-                signIn({ username, password }).then(() => {
-                    x?.classList.toggle('loader')
-                }, () => {
-                    console.log('Error in signIn!')
-                });
-            }, 3000)
+            signIn({ username, password }).then(() => {
+                x?.classList.toggle('loader')
+            }, () => {
+                console.log('Error in signIn!')
+            });
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [username, password]
