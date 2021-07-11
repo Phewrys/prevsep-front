@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
-import ArrowDown from './../../content/img/arrow-down-solid.svg'
+import { Modal } from 'react-bootstrap'
+import swal from 'sweetalert'
 var axios = require('axios')
 var qs = require('qs')
-interface JSONEnviados {
+
+interface JSONSalvos {
     idFormulario: number,
     paciente: {
         idPaciente: number,
@@ -15,7 +17,6 @@ interface JSONEnviados {
         cpf: string
     },
     crmMedico: number,
-    creEnfermeiro: number,
     procedencia: string,
     sirs: {
         febreHipotemia: boolean,
@@ -29,104 +30,467 @@ interface JSONEnviados {
         snlcConfAgtcComa: boolean,
         saturacaoDispneia: boolean
     },
-    dtAcMedico: Date,
-    dtCriacao: Date,
+    dtCriacao: string,
     status: string
 }
 
+interface JSONDoctors {
+    cpf: string
+    nome: string
+    crm: string
+    statusUsuario: string
+}
+
 export default function FormulariosFinalizados() {
+    const token = localStorage.getItem('@PermissionPS:token');
 
-    let [enviados, setEnviados] = useState<JSONEnviados[]>([])
+    const [modalDefault, setModalDefaultShow] = useState(false)
+    const modalDefaultClose = () => {
+        setModalDefaultShow(false);
+    }
+    const modalDefaultShow = () => setModalDefaultShow(true)
 
-    // GET: /api/v1/forms/sepse/nurse/form1 - Returns the nurse forms (part 1) in the database given a criteria.
+    let [PostPut, setPostPut] = useState('')
+    let [idFormulario, setidFormularioPut] = useState(0)
+
+    let [salvos, setSalvos] = useState<JSONSalvos[]>([])
+
+    let [doctors, setDoctors] = useState<JSONDoctors[]>([])
+
+    let [nome, setNome] = useState('')
+    let [idade, setIdade] = useState('')
+    let [cpf, setCpf] = useState('')
+    let [sexo, setSexo] = useState('')
+    let [leito, setLeito] = useState('')
+    let [nAtm, setNatm] = useState('')
+    let [registro, setRegistro] = useState('')
+
+    let [procedencia, setProcedencia] = useState('')
+    let [crm, setCrm] = useState('')
+    let [cre, setCre] = useState('')
+
+    let [febreHipotemia, setFebreHipotemia] = useState(false)
+    let boleanFebreHipotemia = () => {
+        if (febreHipotemia) {
+            setFebreHipotemia(false)
+        } else {
+            setFebreHipotemia(true)
+        }
+    }
+
+    let [leucocitoseLeucopenia, setLeucocitoseLeucopenia] = useState(false)
+    let boleanLeucocitoseLeucopenia = () => {
+        if (leucocitoseLeucopenia) {
+            setLeucocitoseLeucopenia(false)
+        } else {
+            setLeucocitoseLeucopenia(true)
+        }
+    }
+
+    let [taquicardia, setTaquicardia] = useState(false)
+    let boleanTaquicardia = () => {
+        if (taquicardia) {
+            setTaquicardia(false)
+        } else {
+            setTaquicardia(true)
+        }
+    }
+
+    let [taquipneia, setTaquipneia] = useState(false)
+    let boleanTaquipneia = () => {
+        if (taquipneia) {
+            setTaquipneia(false)
+        } else {
+            setTaquipneia(true)
+        }
+    }
+
+    let [diurese, setDiurese] = useState(false)
+    let boleanDiurese = () => {
+        if (diurese) {
+            setDiurese(false)
+        } else {
+            setDiurese(true)
+        }
+    }
+
+    let [hipotensao, setHipotensao] = useState(false)
+    let boleanHipotensao = () => {
+        if (hipotensao) {
+            setHipotensao(false)
+        } else {
+            setHipotensao(true)
+        }
+    }
+
+    let [snlcConfAgtcComa, setSnlcConfAgtcComa] = useState(false)
+    let boleanSnlcConfAgtComa = () => {
+        if (snlcConfAgtcComa) {
+            setSnlcConfAgtcComa(false)
+        } else {
+            setSnlcConfAgtcComa(true)
+        }
+    }
+
+    let [saturacaoDispneia, setSaturacaoDispneia] = useState(false)
+    let boleanSaturacaoDispneia = () => {
+        if (saturacaoDispneia) {
+            setSaturacaoDispneia(false)
+        } else {
+            setSaturacaoDispneia(true)
+        }
+    }
+
+    // GET: /api/v1/doctors - Returns all doctors in the database.
     useEffect(() => {
         const token = localStorage.getItem('@PermissionPS:token');
-    
+
         var data = qs.stringify({
-          'grant_type': 'client_credentials'
+            'grant_type': 'client_credentials'
         });
-    
+
         var config = {
-          method: 'get',
-          url: 'https://prevsep.herokuapp.com/api/v1/forms/sepse/nurse/form1?status=FINISHED',
-          headers: {
-            'accept': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-          data: data
+            method: 'get',
+            url: 'https://prevsep.herokuapp.com/api/v1/doctors',
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            data: data
         };
-    
+
         axios(config)
-          .then(function (response: any) {
-            setEnviados(response.data.content)
-          })
-          .catch(function (error: any) {
+            .then(function (response: any) {
+                setDoctors(response.data)
+            })
+            .catch(function (error: any) {
+                console.log(error);
+            });
+    }, [])
+
+    // GET: /api/v1/nurses/{cpf} - Returns info about a Nurse by a given CPF.
+    useEffect(() => {
+        const cpf = sessionStorage.getItem('@PermissionPS:username');
+
+        var data = qs.stringify({
+            'grant_type': 'client_credentials'
+        });
+
+        var config = {
+            method: 'get',
+            url: `https://prevsep.herokuapp.com/api/v1/nurses/${cpf}`,
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response: any) {
+                setCre(response.data.cre)
+            })
+            .catch(function (error: any) {
+                console.log(error);
+            });
+    }, [])
+
+    // POST or PUT: Update or finish form1
+    async function handlePut(event: any) {
+        event.preventDefault();
+
+        fetch(`https://prevsep.herokuapp.com/api/v1/nurses/${cre}/forms/sepse/${idFormulario}/form1`, {
+            method: PostPut,
+            body: JSON.stringify({
+                paciente: {
+                    nome: nome,
+                    idade: idade,
+                    sexo: sexo,
+                    leito: leito,
+                    nrAtendimento: nAtm,
+                    registro: registro,
+                    cpf: cpf
+                },
+                crmMedico: crm,
+                procedencia: procedencia,
+                sirs: {
+                    febreHipotemia: febreHipotemia,
+                    leucocitoseLeucopenia: leucocitoseLeucopenia,
+                    taquicardia: taquicardia,
+                    taquipneia: taquipneia
+                },
+                disfOrganica: {
+                    diurese: diurese,
+                    hipotensao: hipotensao,
+                    snlcConfAgtcComa: snlcConfAgtcComa,
+                    saturacaoDispneia: saturacaoDispneia
+                }
+            }),
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+        }).catch(function (error: any) {
             console.log(error);
-          });
-      }, [])
+        }).then(() => swal({
+            title: "Cadastrado com Sucesso!!!",
+            icon: "success",
+            buttons: [false],
+            timer: 3000,
+        }))
+    }
+
+    // GET: Get forms for current nurse
+    function formsSalvosNurse() {
+
+        var data = qs.stringify({
+            'grant_type': 'client_credentials'
+        });
+
+        var config = {
+            method: 'get',
+            url: `https://prevsep.herokuapp.com/api/v1/forms/sepse/nurse/form1?status=FINISHED&creEnfermeiro=${cre}`,
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response: any) {
+                setSalvos(response.data.content)
+            })
+            .catch(function (error: any) {
+                console.log(error)
+            });
+    }
+
+    // GET/:id /api/v1/forms/sepse/doctor - Retorna os formulários dos médicos presentes no banco de dados a partir de um certo critério.
+    function handlePutId(id: number) {
+
+        var data = qs.stringify({
+            'grant_type': 'client_credentials'
+        });
+
+        var config = {
+            method: 'get',
+            url: `https://prevsep.herokuapp.com/api/v1/forms/sepse/nurse/form1?idFormulario=${id}`,
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response: any) {
+                const data = response.data.content[0]
+                setidFormularioPut(data.idFormulario)
+
+                setNome(data.paciente.nome)
+                setIdade(data.paciente.idade)
+                setCpf(data.paciente.cpf)
+                setSexo(data.paciente.sexo)
+                setNatm(data.paciente.nrAtendimento)
+                setLeito(data.paciente.leito)
+                setRegistro(data.paciente.registro)
+
+                setCrm(data.crmMedico)
+                setProcedencia(data.procedencia)
+
+                setFebreHipotemia(data.sirs.febreHipotemia)
+                setLeucocitoseLeucopenia(data.sirs.leucocitoseLeucopenia)
+                setTaquicardia(data.sirs.taquicardia)
+                setTaquipneia(data.sirs.taquipneia)
+
+                setDiurese(data.disfOrganica.diurese)
+                setHipotensao(data.disfOrganica.hipotensao)
+                setSnlcConfAgtcComa(data.disfOrganica.snlcConfAgt)
+                setSaturacaoDispneia(data.disfOrganica.saturacaoDispneia)
+
+                modalDefaultShow()
+            })
+            .catch(function (error: any) {
+                console.log(error)
+            });
+    }
 
     return (
         <>
             <div className="div-header">
-                <h2>Formulários Enviados</h2>
-                <button type="button" className="btn button-blue">Novo Formulário +</button>
+                <h2>Formulários Finalizados</h2>
             </div>
             <div>
                 <div className="div-content">
                     <div className="m-2">
-                        <small>Formulários ({enviados.length})</small><br/><small>Imprimir</small> <small>Exportar</small>
+                        <input className="btn button-purple m-3" onClick={() => formsSalvosNurse()} value="Pesquisar" />
+                        <br />
+                        <small className="m-3">({salvos.length}) Formulários</small>
                     </div>
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                                {/* <th scope="col">#</th> */}
-                                <th scope="col">Nº Formulário <img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img></th>
-                                <th scope="col">Paciente <img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img></th>
-                                <th scope="col">Data de Criação <img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img></th>
-                                <th scope="col">Data de Autorização <img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img></th>
-                                <th scope="col">STATUS<img src={ArrowDown} alt="Arrow Down" className="icone p-1"></img></th>
+                                <th scope="col">Ações</th>
+                                <th scope="col">Nº Formulário</th>
+                                <th scope="col">Nome do Paciente</th>
+                                <th scope="col">Data de Criação</th>
                             </tr>
                         </thead>
                         <tbody>
-                        {enviados.map(enviado => {
+                            {salvos.map(salvo => {
                                 return (
-                                    <tr key={enviado.idFormulario}>
-                                        {/* <th scope="row"></th> */}
-                                        <td>{enviado.idFormulario}</td>
-                                        <td>{enviado.paciente.nome}</td>
-                                        <td>{enviado.dtCriacao}</td>
-                                        <td>{enviado.dtAcMedico}</td>
-                                        <td>{enviado.status}</td>
+                                    <tr key={salvo.idFormulario}>
+                                        <td><a onClick={() => handlePutId(salvo.idFormulario)} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Editar"><i className="icon far fa-edit fa-1x"></i></a></td>
+                                        <td>{salvo.idFormulario}</td>
+                                        <td>{salvo.paciente.nome}</td>
+                                        <td>{salvo.dtCriacao}</td>
                                     </tr>
                                 )
                             })}
-                            {/* <tr>
-                                <th scope="row">1</th>
-                                <td>000000</td>
-                                <td>Xxxxx Xxxxx</td>
-                                <td>00/00/0000 00:00:00</td>
-                                <td>00/00/0000 00:00:00</td>
-                            </tr> */}
                         </tbody>
                     </table>
                 </div>
-                    <nav aria-label="Navegação de página exemplo">
-                        <ul className="pagination justify-content-center pt-3">
-                            {/* <li className="page-item disabled">
-                                <a className="page-link" href="#" tabIndex={-1}>Anterior</a>
-                            </li> */}
-                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                            <li><a className="page-link" href="#">1</a></li>
-                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                            <li><a className="page-link" href="#">2</a></li>
-                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                            <li><a className="page-link" href="#">3</a></li>
-                            {/* <li className="page-item">
-                                <a className="page-link" href="#">Próximo</a>
-                            </li> */}
-                        </ul>
-                    </nav>
             </div>
+
+
+
+            <Modal id="modal" show={modalDefault} onHide={modalDefaultClose} size="xl">
+                <Modal.Header>
+                    <h2>Formulário</h2>
+                </Modal.Header>
+                <Modal.Body style={{ background: '#fafdff' }}>
+                    <div className="row">
+                        <div className="col-md-10 offset-1">
+                            <form onSubmit={handlePut}>
+                                <div className="container" style={{ marginTop: '20px' }}>
+                                    <div className="row">
+                                        <div className="col-md-12 col-lg-5 m-2">
+                                            <h4>Paciente</h4>
+                                            <div className="form-group">
+                                                <label htmlFor="idNomeCompleto">Nome completo*</label>
+                                                <input type="text" className="form-control" id="idNomeCompleto" value={nome} readOnly onChange={event => setNome(event.target.value)} required />
+                                            </div>
+                                            <div className="form-row">
+                                                <div className="col-md-6 mb-3">
+                                                    <label htmlFor="idIdade">Idade*</label>
+                                                    <input type="number" className="form-control" id="idIdade" value={idade} readOnly onChange={event => setIdade(event.target.value)} required />
+                                                </div>
+                                                <div className="col-md-6 mb-3">
+                                                    <label htmlFor="idCpf">CPF*</label>
+                                                    <input type="text" className="form-control" id="idCpf" value={cpf} readOnly onChange={event => setCpf(event.target.value)} required />
+                                                </div>
+                                            </div>
+                                            <div className="form-row">
+                                                <div className="col-md-6 mb-3">
+                                                    <label htmlFor="idCpf">Sexo*</label>
+                                                    <input type="text" className="form-control" id="idSexo" value={sexo} readOnly required />
+                                                </div>
+                                                <div className="col-md-6 mb-3">
+                                                    <label htmlFor="idLeitor">Leito*</label>
+                                                    <input type="text" className="form-control" id="idLeitor" value={leito} readOnly onChange={event => setLeito(event.target.value)} required />
+                                                </div>
+                                            </div>
+                                            <div className="form-row">
+                                                <div className="col-md-6 mb-3">
+                                                    <label htmlFor="idNAtendimento">Nº Atendimento*</label>
+                                                    <input type="text" className="form-control" id="idNAtendimento" value={nAtm} readOnly onChange={event => setNatm(event.target.value)} required />
+                                                </div>
+                                                <div className="col-md-6 mb-3">
+                                                    <label htmlFor="idRegistro">Registro*</label>
+                                                    <input type="text" className="form-control" id="idRegistro" value={registro} readOnly onChange={event => setRegistro(event.target.value)} required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12 col-lg-5 m-2">
+                                            <h4>Equipe de Enfermagem</h4>
+                                            <div className="my-2">1) Paciente apresenta dois ou mais sinais de SIRS.</div>
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" disabled defaultChecked={febreHipotemia}  readOnly id="idEF11" />
+                                                <label className="form-check-label" htmlFor="idEF11">
+                                                    Febre {'>'} 37,8ºC ou hipotermia {'<'} 35ºC.
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" disabled defaultChecked={leucocitoseLeucopenia} readOnly onChange={() => boleanLeucocitoseLeucopenia()} id="idEF12" />
+                                                <label className="form-check-label" htmlFor="idEF12">
+                                                    Leucocitose {'>'} 12.000, leucopenia {'<'} 4.000 ou desvio esquerdo {'>'} 10% bastões.
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" disabled defaultChecked={taquicardia} readOnly onChange={() => boleanTaquicardia()} id="idEF13" />
+                                                <label className="form-check-label" htmlFor="idEF13">
+                                                    Taquicardia {'>'} 90bpm.
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" disabled defaultChecked={taquipneia} readOnly onChange={() => boleanTaquipneia()} id="idEF14" />
+                                                <label className="form-check-label" htmlFor="idEF14">
+                                                    Taquipneia {'>'} 20irpm.
+                                                </label>
+                                            </div>
+                                            <div className="my-2">2) Paciente apresenta uma ou mais disfunção orgânica.</div>
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" disabled defaultChecked={diurese} readOnly onChange={() => boleanDiurese()} id="idEF21" />
+                                                <label className="form-check-label" htmlFor="idEF21">
+                                                    Diurese {'<'} 0,5ml/kg/hora.
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" disabled defaultChecked={hipotensao} readOnly onChange={() => boleanHipotensao()} id="idEF22" />
+                                                <label className="form-check-label" htmlFor="idEF22">
+                                                    Hipotensão (PAS &le; 90mmHg).
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" disabled defaultChecked={snlcConfAgtcComa} readOnly onChange={() => boleanSnlcConfAgtComa()} id="idEF23" />
+                                                <label className="form-check-label" htmlFor="idEF23">
+                                                    Sonolência, confusão, agitação ou coma.
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" disabled defaultChecked={saturacaoDispneia} readOnly onChange={() => boleanSaturacaoDispneia()} id="idEF24" />
+                                                <label className="form-check-label" htmlFor="idEF24">
+                                                    SatO<sub>2</sub> &le; 90%, necessidade de O<sub>2</sub> ou dispneia.
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-12 col-lg-5 m-2">
+                                            <h4>Procedência</h4>
+                                            <div className="col-md-6 mb-3">
+                                                <input type="text" className="form-control" id="procedencia" value={procedencia} readOnly required />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12 col-lg-5 m-2">
+                                            <h4>Acionamento da Equipe Médica</h4>
+                                                <div className="col-md-6 mb-3">
+                                                    <label htmlFor="idNomeMedicoChamado">CRM*</label>
+                                                    <input type="text" className="form-control" id="crm" value={crm} readOnly required />
+                                                </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="row mt-3">
+                                        <div className="d-flex justify-content-start mt-3">
+                                            <div>
+                                                <small className="ml-2"><span style={{ color: 'red' }}>*</span> Campos Obrigatórios</small>
+                                                <br />
+                                                <input className="btn button-purple bg-danger m-2" onClick={() => { modalDefaultClose(); }} value="Sair" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <br />
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
         </>
     )
 }
