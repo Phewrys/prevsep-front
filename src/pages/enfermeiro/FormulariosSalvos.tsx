@@ -45,7 +45,9 @@ export default function FormulariosAbertos() {
   const token = localStorage.getItem('@PermissionPS:token');
 
   const [modalDefault, setModalDefaultShow] = useState(false)
-  const modalDefaultClose = () => setModalDefaultShow(false)
+  const modalDefaultClose = () => {
+    setModalDefaultShow(false);
+  }
   const modalDefaultShow = () => setModalDefaultShow(true)
 
   let [PostPut, setPostPut] = useState('')
@@ -285,30 +287,39 @@ export default function FormulariosAbertos() {
     axios(config)
       .then(function (response: any) {
         const data = response.data.content[0]
-        setidFormularioPut(data.idFormulario)
-        
-        setNome(data.paciente.nome)
-        setIdade(data.paciente.idade)
-        setCpf(data.paciente.cpf)
-        setSexo(data.paciente.sexo)
-        setNatm(data.paciente.nrAtendimento)
-        setLeito(data.paciente.leito)
-        setRegistro(data.paciente.registro)
+        if (data.status === "SAVED") {
+          setidFormularioPut(data.idFormulario)
+          
+          setNome(data.paciente.nome)
+          setIdade(data.paciente.idade)
+          setCpf(data.paciente.cpf)
+          setSexo(data.paciente.sexo)
+          setNatm(data.paciente.nrAtendimento)
+          setLeito(data.paciente.leito)
+          setRegistro(data.paciente.registro)
 
-        setCrm(data.crmMedico)
-        setProcedencia(data.procedencia)
+          setCrm(data.crmMedico)
+          setProcedencia(data.procedencia)
 
-        setFebreHipotemia(data.sirs.febreHipotemia)
-        setLeucocitoseLeucopenia(data.sirs.leucocitoseLeucopenia)
-        setTaquicardia(data.sirs.taquicardia)
-        setTaquipneia(data.sirs.taquipneia)
+          setFebreHipotemia(data.sirs.febreHipotemia)
+          setLeucocitoseLeucopenia(data.sirs.leucocitoseLeucopenia)
+          setTaquicardia(data.sirs.taquicardia)
+          setTaquipneia(data.sirs.taquipneia)
 
-        setDiurese(data.disfOrganica.diurese)
-        setHipotensao(data.disfOrganica.hipotensao)
-        setSnlcConfAgtcComa(data.disfOrganica.snlcConfAgt)
-        setSaturacaoDispneia(data.disfOrganica.saturacaoDispneia)
+          setDiurese(data.disfOrganica.diurese)
+          setHipotensao(data.disfOrganica.hipotensao)
+          setSnlcConfAgtcComa(data.disfOrganica.snlcConfAgt)
+          setSaturacaoDispneia(data.disfOrganica.saturacaoDispneia)
 
-        modalDefaultShow()
+          modalDefaultShow()
+        }
+        else {
+          swal({
+            title: "Formulário já submetido!",
+            buttons: [false],
+            timer: 2000,
+          })
+        }
       }) 
       .catch(function (error: any) {
         console.log(error)
@@ -534,8 +545,8 @@ export default function FormulariosAbertos() {
                       <div>
                         <small className="ml-2"><span style={{ color: 'red' }}>*</span> Campos Obrigatórios</small>
                         <br />
-                        <input className="btn button-purple m-2" type="submit" value="Editar" />
-                        <input className="btn button-purple bg-danger m-2" onClick={modalDefaultClose} value="Sair" />
+                        <input className="btn button-purple m-2" type="submit" onClick={() => {modalDefaultClose();}} value="Editar" />
+                        <input className="btn button-purple bg-danger m-2" onClick={() => {modalDefaultClose();}} value="Sair" />
                       </div>
                     </div>
                   </div>
