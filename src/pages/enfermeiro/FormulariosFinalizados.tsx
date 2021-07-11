@@ -34,7 +34,7 @@ interface JSONEnviados {
     status: string
 }
 
-export default function FormulariosEnviados() {
+export default function FormulariosFinalizados() {
 
     let [enviados, setEnviados] = useState<JSONEnviados[]>([])
 

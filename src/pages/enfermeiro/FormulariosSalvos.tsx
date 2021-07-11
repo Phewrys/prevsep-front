@@ -41,7 +41,7 @@ interface JSONDoctors {
   statusUsuario: string
 }
 
-export default function FormulariosAbertos() {
+export default function FormulariosSalvos() {
   const token = localStorage.getItem('@PermissionPS:token');
 
   const [modalDefault, setModalDefaultShow] = useState(false)
@@ -329,7 +329,7 @@ export default function FormulariosAbertos() {
   return (
     <>
       <div className="div-header">
-        <h2>Formulários Abertos</h2>
+        <h2>Formulários Salvos</h2>
       </div>
       <div>
         <div className="div-content">
