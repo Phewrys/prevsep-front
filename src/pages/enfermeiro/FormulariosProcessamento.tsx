@@ -250,7 +250,7 @@ export default function FormulariosFinalizados() {
 
         var config = {
             method: 'get',
-            url: `https://prevsep.herokuapp.com/api/v1/forms/sepse/nurse/form1?status=FINISHED&creEnfermeiro=${cre}`,
+            url: `https://prevsep.herokuapp.com/api/v1/forms/sepse/nurse/form1?status=CREATED&creEnfermeiro=${cre}`,
             headers: {
                 'accept': 'application/json',
                 'Authorization': `Bearer ${token}`,
@@ -320,8 +320,9 @@ export default function FormulariosFinalizados() {
     return (
         <>
             <div className="div-header">
-                <h2>Formulários Finalizados</h2>
+                <h2>Formulários em Processamento</h2>
             </div>
+                <h6>Formulários já preenchidos, mas não finalizados.</h6>
             <div>
                 <div className="div-content">
                     <div className="m-2">
