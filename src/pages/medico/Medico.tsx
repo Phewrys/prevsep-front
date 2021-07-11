@@ -68,10 +68,8 @@ export default function Medico() {
             <div className="list-group list-group-flush sidebarPage-top">
             <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a className="nav-link active" id="formulariosAbertos-tab" data-toggle="pill" href="#formulariosAbertos" role="tab" aria-controls="formulariosAbertos" aria-selected="true"><img src={IconeEmAberto} alt="Icone Criar Formulário" className="icone"></img>Formulários Abertos</a>
-                <a className="nav-link" id="formulariosEnviados-tab" data-toggle="pill" href="#formulariosEnviados" role="tab" aria-controls="formulariosEnviados" aria-selected="true"><img src={IconeEmAberto} alt="Icone Criar Formulário" className="icone"></img>Formulários Enviados</a>
-                <a className="nav-link" id="preencherFormulario-tab" data-toggle="pill" href="#preencherFormulario" role="tab" aria-controls="preencherFormulario" aria-selected="false"><img src={IconeEmAberto} alt="Icone Criar Formulário" className="icone"></img>Preencher Formulário</a>
                 <a className="nav-link" id="formulariosSalvos-tab" data-toggle="pill" href="#formulariosSalvos" role="tab" aria-controls="formulariosSalvos" aria-selected="true"><img src={IconeEmAberto} alt="Icone Criar Formulário" className="icone"></img>Formulários Salvos</a>
-                <a className="nav-link" id="visualizarFormulario-tab" data-toggle="pill" href="#visualizarFormulario" role="tab" aria-controls="visualizarFormulario" aria-selected="false"><img src={IconeDados} alt="Icone Criar Formulário" className="icone"></img>Visualizar Formulário</a>
+                <a className="nav-link" id="formulariosEnviados-tab" data-toggle="pill" href="#formulariosEnviados" role="tab" aria-controls="formulariosEnviados" aria-selected="true"><img src={IconeEmAberto} alt="Icone Criar Formulário" className="icone"></img>Formulários Enviados</a>
             </div>
             </div>
         </div>
@@ -100,9 +98,7 @@ export default function Medico() {
                 <div className="tab-content page-content" id="v-pills-tabContent">
                     <div className="tab-pane fade show active" id="formulariosAbertos" role="tabpanel" aria-labelledby="formulariosAbertos-tab"><FormulariosAbertos /></div>
                     <div className="tab-pane fade" id="formulariosEnviados" role="tabpanel" aria-labelledby="formulariosEnviados-tab"><FormulariosEnviados /></div>
-                    <div className="tab-pane fade" id="preencherFormulario" role="tabpanel" aria-labelledby="preencherFormulario-tab"><PreencherFormulario /></div>
                     <div className="tab-pane fade" id="formulariosSalvos" role="tabpanel" aria-labelledby="formulariosSalvos-tab"><FormulariosSalvos /></div>
-                    <div className="tab-pane fade" id="visualizarFormulario" role="tabpanel" aria-labelledby="visualizarFormulario-tab">Visualizar Formulário</div>
                 </div>
             </div>
         </div>
