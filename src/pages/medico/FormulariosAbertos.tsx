@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import swal from 'sweetalert'
+import Moment from 'moment'
 var axios = require('axios')
 var qs = require('qs')
 
@@ -10,6 +11,9 @@ interface JSONAbertos {
   crmMedico: number,
   dtCriacao: Date,
   status: string,
+  paciente: {
+    nome: string,
+  },
   focoInfeccioso: {
     pneumoniaEmpema: boolean,
     infeccaoUrinaria: boolean,
@@ -305,7 +309,7 @@ export default function FormulariosAbertos() {
       });
   }, [])
 
-  // GET: /api/v1/doctors/{crm}/forms/sepse/pending - Retorna todos os formulários pedentes de um médico de acordo com o seu crm.
+  // GET: /api/v1/forms/sepse/doctor - Retorna os formulários dos médicos presentes no banco de dados a partir de um certo critério..
   function formsPendingDoctors() {
 
     var data = qs.stringify({
@@ -314,7 +318,7 @@ export default function FormulariosAbertos() {
 
     var config = {
       method: 'get',
-      url: `https://prevsep.herokuapp.com/api/v1/doctors/${crm}/forms/sepse/pending`,
+      url: `https://prevsep.herokuapp.com/api/v1/forms/sepse/doctor?crmMedico=${crm}&status=PENDING`,
       headers: {
         'accept': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -400,13 +404,11 @@ export default function FormulariosAbertos() {
         setrsJustificativaNaoPut(response.data.content[0].reavaliacoesSeriadas.justificativaNao)
         setaplicadaPut(response.data.content[0].reavaliacoesSeriadas.aplicada)
 
+        modalDefaultShow()
       })
       .catch(function (error: any) {
         console.log(error)
       });
-
-    setIdPut(id)
-    modalDefaultShow()
   }
 
   // EDITAR /api/v1/doctors/{crm}/forms/sepse/{idForm}
@@ -415,13 +417,50 @@ export default function FormulariosAbertos() {
   async function handlePut(event: any) {
     event.preventDefault();
 
-    // console.log(crm)
-    // console.log(idFormulario)
-    // console.log(PostPut)
-
-    fetch(`https://prevsep.herokuapp.com/api/v1/doctors/54322/forms/sepse/16`, {
-      method: 'PUT',
-      body: JSON.stringify({"focoInfeccioso":{"pneumoniaEmpema":false,"infeccaoUrinaria":true,"infeccaoAbdominal":true,"menigite":false,"endocardite":true,"pelePartesMoles":true,"infeccaoProtese":true,"infeccaoOssea":true,"infeccaoFeridaOperatoria":true,"infeccaoSanguineaCateter":true,"semFocoDefinido":true,"outrasInfeccoes":"outras Teste 1"},"criterioExclusao":{"apresentaCriterioExclusao":true,"fimDeVida":true,"doencaAtipica":true,"probabilidadeSepseBaixa":true},"bundleHora1":{"iniciado":true,"dtDisparo":"2021-07-11T06:31:47.656Z","lactoDtColeta":"2021-07-11T06:31:47.656Z","hemoculturaDtColeta":"2021-07-11T06:31:47.656Z","antibioticoAmploAspectro":"2021-07-11T06:31:47.656Z","cristaloides":true,"vasopressores":true,"justificativaNao":"justificativa bla bla"},"reavaliacoesSeriadas":{"getqSofa":true,"pas100Mmghg":true,"fr22Rpm":true,"rebaixamentoNivelConsiencia":true,"lactoInicialmenteAlto":true,"outros":"string","justificativaNao":"sjustificativa bla","aplicada":true}}),
+    fetch(`https://prevsep.herokuapp.com/api/v1/doctors/${crm}/forms/sepse/${idFormulario}`, {
+      method: `${PostPut}`,
+      body: JSON.stringify({
+        focoInfeccioso:{
+          pneumoniaEmpema: pneumoniaEmpema,
+          infeccaoUrinaria: infeccaoUrinaria,
+          infeccaoAbdominal: infeccaoAbdominal,
+          menigite: menigite,
+          endocardite: endocardite,
+          pelePartesMoles: pelePartesMoles,
+          infeccaoProtese: infeccaoProtese,
+          infeccaoOssea: infeccaoOssea,
+          infeccaoFeridaOperatoria: infeccaoFeridaOperatoria,
+          infeccaoSanguineaCateter: infeccaoSanguineaCateter,
+          semFocoDefinido: semFocoDefinido,
+          outrasInfeccoes: outrasInfeccoes
+        },
+        criterioExclusao:{
+          apresentaCriterioExclusao: apresentaCriterioExclusao,
+          fimDeVida: fimDeVida,
+          doencaAtipica: doencaAtipica,
+          probabilidadeSepseBaixa: probabilidadeSepseBaixa
+        },
+        bundleHora1:{
+          iniciado: iniciado,
+          dtDisparo: "2021-07-11T18:52:57.130Z",
+          lactoDtColeta: "2021-07-11T18:52:57.130Z",
+          hemoculturaDtColeta: "2021-07-11T18:52:57.130Z",
+          antibioticoAmploAspectro: antibioticoAmploAspectro,
+          cristaloides: cristaloides,
+          vasopressores: vasopressores,
+          justificativaNao: bhJustificativaNao
+        },
+        reavaliacoesSeriadas:{
+          getqSofa: qSofa,
+          pas100Mmghg: pas100Mmghg,
+          fr22Rpm: fr22Rpm,
+          rebaixamentoNivelConsiencia: rebaixamentoNivelConsiencia,
+          lactoInicialmenteAlto: lactoInicialmenteAlto,
+          outros: outros,
+          justificativaNao: rsJustificativaNao,
+          aplicada: aplicada
+        }
+        }),
       headers: {
         'accept': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -430,12 +469,13 @@ export default function FormulariosAbertos() {
     }).catch(function (error: any) {
       console.log(error);
     })
-    // .then(() => swal({
-    //   title: "Editado com Sucesso!!!",
-    //   icon: "success",
-    //   buttons: [false],
-    //   timer: 3000,
-    // }))
+    .then(() => swal({
+      title: "Editado com Sucesso!!!",
+      icon: "success",
+      buttons: [false],
+      timer: 3000,
+    }))
+
     modalDefaultClose()
   }
 
@@ -456,7 +496,7 @@ export default function FormulariosAbertos() {
               <tr>
                 <th scope="col">Ações</th>
                 <th scope="col">Nº Formulário</th>
-                <th scope="col">*Nome do Paciente</th>
+                <th scope="col">Paciente</th>
                 <th scope="col">Data de Criação</th>
                 <th scope="col">STATUS</th>
               </tr>
@@ -467,7 +507,7 @@ export default function FormulariosAbertos() {
                   <tr key={aberto.idFormulario}>
                     <td><a onClick={() => handlePutId(aberto.idFormulario)} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Editar"><i className="icon far fa-edit fa-1x"></i></a></td>
                     <td>{aberto.idFormulario}</td>
-                    <td>{aberto.idPaciente}</td>
+                    <td>{aberto.paciente.nome}</td>
                     <td>{aberto.dtCriacao}</td>
                     <td>{aberto.status}</td>
                   </tr>
@@ -492,23 +532,20 @@ export default function FormulariosAbertos() {
                       <div className="form-row" style={{ margin: '-10px 0 -10px 0' }}>
                         <label htmlFor="idNomeCompleto" className="font-weight-bold col-form-label">Nome completo: </label>
                         <span>
-                          <input type="text" className="form-control-plaintext" id="idNomeCompleto" placeholder={nome} onChange={e => setnomePut(e.target.value)} />
+                          <input type="text" className="form-control-plaintext" id="idNomeCompleto" defaultValue={nome} readOnly />
                         </span>
                       </div>
                       <div className="form-row pl-1" style={{ margin: '-10px 0 -10px 0' }}>
                         <div className="form-row">
                           <label htmlFor="idIdade" className="font-weight-bold col-form-label">Idade: </label>
                           <span>
-                            <input type="number" className="form-control-plaintext" id="idIdade" placeholder={idade} onChange={e => setidadePut(e.target.value)} />
+                            <input type="number" className="form-control-plaintext" id="idIdade" defaultValue={idade} readOnly />
                           </span>
                         </div>
                         <div className="form-row">
                           <label htmlFor="idSexo" className="font-weight-bold col-form-label">Sexo: </label>
                           <span>
-                            <select id="idSexo" className="form-control" placeholder={sexo} onChange={e => setsexoPut(e.target.value)} >
-                              <option value={'Masculino'}>Masculino</option>
-                              <option value={'Feminino'}>Feminino</option>
-                            </select>
+                            <input type="text" className="form-control-plaintext" id="idSexo" defaultValue={sexo} readOnly />
                           </span>
                         </div>
                       </div>
@@ -516,20 +553,20 @@ export default function FormulariosAbertos() {
                         <div className="form-row">
                           <label htmlFor="idLeitor" className="font-weight-bold col-form-label">Leito: </label>
                           <span>
-                            <input type="number" className="form-control-plaintext" id="idLeitor" placeholder={leito} onChange={e => setleitoPut(e.target.value)} />
+                            <input type="number" className="form-control-plaintext" id="idLeitor" defaultValue={leito} readOnly />
                           </span>
                         </div>
                         <div className="form-row">
                           <label htmlFor="idNatendimento" className="font-weight-bold col-form-label">Nº Atendimento: </label>
                           <span>
-                            <input type="mumber" className="form-control-plaintext" id="idNatendimento" placeholder={nrAtendimento} onChange={e => setnrAtendimentoPut(e.target.value)} />
+                            <input type="mumber" className="form-control-plaintext" id="idNatendimento" defaultValue={nrAtendimento} readOnly />
                           </span>
                         </div>
                       </div>
                       <div className="form-row" style={{ margin: '-10px 0 -10px 0' }}>
                         <label htmlFor="idRegistro" className="font-weight-bold col-form-label">Registro: </label>
                         <span>
-                          <input type="number" className="form-control-plaintext" id="idRegistro" placeholder={registro} onChange={e => setregistroPut(e.target.value)} />
+                          <input type="number" className="form-control-plaintext" id="idRegistro" defaultValue={registro} readOnly />
                         </span>
                       </div>
 
