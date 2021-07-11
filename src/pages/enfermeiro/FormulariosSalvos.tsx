@@ -49,7 +49,6 @@ export default function FormulariosAbertos() {
   const modalDefaultShow = () => setModalDefaultShow(true)
 
   let [PostPut, setPostPut] = useState('')
-  let [idPut, setIdPut] = useState(0)
   let [idFormulario, setidFormularioPut] = useState(0)
 
   let [salvos, setSalvos] = useState<JSONSalvos[]>([])
@@ -62,7 +61,7 @@ export default function FormulariosAbertos() {
   let [sexo, setSexo] = useState('')
   let [leito, setLeito] = useState('')
   let [nAtm, setNatm] = useState('')
-  let [registro, SetRegistro] = useState('')
+  let [registro, setRegistro] = useState('')
 
   let [procedencia, setProcedencia] = useState('')
   let [crm, setCrm] = useState('')
@@ -122,12 +121,12 @@ export default function FormulariosAbertos() {
     }
   }
 
-  let [snlcConfAgtComa, setSnlcConfAgtComa] = useState(false)
+  let [snlcConfAgtcComa, setSnlcConfAgtcComa] = useState(false)
   let boleanSnlcConfAgtComa = () => {
-    if (snlcConfAgtComa) {
-      setSnlcConfAgtComa(false)
+    if (snlcConfAgtcComa) {
+      setSnlcConfAgtcComa(false)
     } else {
-      setSnlcConfAgtComa(true)
+      setSnlcConfAgtcComa(true)
     }
   }
 
@@ -221,7 +220,7 @@ export default function FormulariosAbertos() {
         disfOrganica: {
           diurese: diurese,
           hipotensao: hipotensao,
-          snlcConfAgtcComa: snlcConfAgtComa,
+          snlcConfAgtcComa: snlcConfAgtcComa,
           saturacaoDispneia: saturacaoDispneia
         }
       }),
@@ -294,16 +293,26 @@ export default function FormulariosAbertos() {
         setSexo(data.paciente.sexo)
         setNatm(data.paciente.nrAtendimento)
         setLeito(data.paciente.leito)
-        SetRegistro(data.paciente.registro)
+        setRegistro(data.paciente.registro)
 
+        setCrm(data.crmMedico)
+        setProcedencia(data.procedencia)
 
+        setFebreHipotemia(data.sirs.febreHipotemia)
+        setLeucocitoseLeucopenia(data.sirs.leucocitoseLeucopenia)
+        setTaquicardia(data.sirs.taquicardia)
+        setTaquipneia(data.sirs.taquipneia)
+
+        setDiurese(data.disfOrganica.diurese)
+        setHipotensao(data.disfOrganica.hipotensao)
+        setSnlcConfAgtcComa(data.disfOrganica.snlcConfAgt)
+        setSaturacaoDispneia(data.disfOrganica.saturacaoDispneia)
+
+        modalDefaultShow()
       }) 
       .catch(function (error: any) {
         console.log(error)
       });
-
-    setIdPut(id)
-    modalDefaultShow()
   }
 
   return (
@@ -394,7 +403,7 @@ export default function FormulariosAbertos() {
                         </div>
                         <div className="col-md-6 mb-3">
                           <label htmlFor="idRegistro">Registro*</label>
-                          <input type="text" className="form-control" id="idRegistro" value={registro} onChange={event => SetRegistro(event.target.value)} required />
+                          <input type="text" className="form-control" id="idRegistro" value={registro} onChange={event => setRegistro(event.target.value)} required />
                         </div>
                       </div>
                     </div>
@@ -402,50 +411,50 @@ export default function FormulariosAbertos() {
                       <h4>Equipe de Enfermagem</h4>
                       <div className="my-2">1) Paciente apresenta dois ou mais sinais de SIRS.</div>
                       <div className="form-check">
-                        <input className="form-check-input" type="checkbox" onChange={() => boleanFebreHipotemia()} id="idEF11" />
+                        <input className="form-check-input" type="checkbox" defaultChecked={febreHipotemia} onChange={() => boleanFebreHipotemia()} id="idEF11" />
                         <label className="form-check-label" htmlFor="idEF11">
                           Febre {'>'} 37,8ºC ou hipotermia {'<'} 35ºC.
                         </label>
                       </div>
                       <div className="form-check">
-                        <input className="form-check-input" type="checkbox" onChange={() => boleanLeucocitoseLeucopenia()} id="idEF12" />
+                        <input className="form-check-input" type="checkbox" defaultChecked={leucocitoseLeucopenia} onChange={() => boleanLeucocitoseLeucopenia()} id="idEF12" />
                         <label className="form-check-label" htmlFor="idEF12">
                           Leucocitose {'>'} 12.000, leucopenia {'<'} 4.000 ou desvio esquerdo {'>'} 10% bastões.
                         </label>
                       </div>
                       <div className="form-check">
-                        <input className="form-check-input" type="checkbox" onChange={() => boleanTaquicardia()} id="idEF13" />
+                        <input className="form-check-input" type="checkbox" defaultChecked={taquicardia} onChange={() => boleanTaquicardia()} id="idEF13" />
                         <label className="form-check-label" htmlFor="idEF13">
                           Taquicardia {'>'} 90bpm.
                         </label>
                       </div>
                       <div className="form-check">
-                        <input className="form-check-input" type="checkbox" onChange={() => boleanTaquipneia()} id="idEF14" />
+                        <input className="form-check-input" type="checkbox" defaultChecked={taquipneia} onChange={() => boleanTaquipneia()} id="idEF14" />
                         <label className="form-check-label" htmlFor="idEF14">
                           Taquipneia {'>'} 20irpm.
                         </label>
                       </div>
                       <div className="my-2">2) Paciente apresenta uma ou mais disfunção orgânica.</div>
                       <div className="form-check">
-                        <input className="form-check-input" type="checkbox" onChange={() => boleanDiurese()} id="idEF21" />
+                        <input className="form-check-input" type="checkbox" defaultChecked={diurese} onChange={() => boleanDiurese()} id="idEF21" />
                         <label className="form-check-label" htmlFor="idEF21">
                           Diurese {'<'} 0,5ml/kg/hora.
                         </label>
                       </div>
                       <div className="form-check">
-                        <input className="form-check-input" type="checkbox" onChange={() => boleanHipotensao()} id="idEF22" />
+                        <input className="form-check-input" type="checkbox" defaultChecked={hipotensao} onChange={() => boleanHipotensao()} id="idEF22" />
                         <label className="form-check-label" htmlFor="idEF22">
                           Hipotensão (PAS &le; 90mmHg).
                         </label>
                       </div>
                       <div className="form-check">
-                        <input className="form-check-input" type="checkbox" onChange={() => boleanSnlcConfAgtComa()} id="idEF23" />
+                        <input className="form-check-input" type="checkbox" defaultChecked={snlcConfAgtcComa} onChange={() => boleanSnlcConfAgtComa()} id="idEF23" />
                         <label className="form-check-label" htmlFor="idEF23">
                           Sonolência, confusão, agitação ou coma.
                         </label>
                       </div>
                       <div className="form-check">
-                        <input className="form-check-input" type="checkbox" onChange={() => boleanSaturacaoDispneia()} id="idEF24" />
+                        <input className="form-check-input" type="checkbox" defaultChecked={saturacaoDispneia} onChange={() => boleanSaturacaoDispneia()} id="idEF24" />
                         <label className="form-check-label" htmlFor="idEF24">
                           SatO<sub>2</sub> &le; 90%, necessidade de O<sub>2</sub> ou dispneia.
                         </label>
@@ -457,35 +466,35 @@ export default function FormulariosAbertos() {
                       <h4>Procedência</h4>
                       <div className="form-row">
                         <div className="form-check col-md-5 ml-4">
-                          <input className="form-check-input" type="radio" name="radio" value="CLINICA_MEDICA_1" onChange={event => setProcedencia(event.target.value)} id="idClinicaMedica1" />
+                          <input className="form-check-input" type="radio" name="radio" value="CLINICA_MEDICA_1" defaultChecked={procedencia==="CLINICA_MEDICA_1"} onChange={event => setProcedencia(event.target.value)} id="idClinicaMedica1" />
                           <label className="form-check-label" htmlFor="idClinicaMedica1">Clínica Médica I</label>
                         </div>
                         <div className="form-check col-md-5 ml-4">
-                          <input className="form-check-input" type="radio" name="radio" value="CLINICA_MEDICA_2" onChange={event => setProcedencia(event.target.value)} id="idClinicaMedica2" />
+                          <input className="form-check-input" type="radio" name="radio" value="CLINICA_MEDICA_2" defaultChecked={procedencia==="CLINICA_MEDICA_2"} onChange={event => setProcedencia(event.target.value)} id="idClinicaMedica2" />
                           <label className="form-check-label" htmlFor="idClinicaMedica2">Clínica Médica II</label>
                         </div>
                         <div className="form-check col-md-5 ml-4">
-                          <input className="form-check-input" type="radio" name="radio" value="CLINICA_CIRURGICA_1" onChange={event => setProcedencia(event.target.value)} id="idClinicaCirurgica1" />
+                          <input className="form-check-input" type="radio" name="radio" value="CLINICA_CIRURGICA_1" defaultChecked={procedencia==="CLINICA_CIRURGICA_1"} onChange={event => setProcedencia(event.target.value)} id="idClinicaCirurgica1" />
                           <label className="form-check-label" htmlFor="idClinicaCirurgica1">Clínica Cirúrgica I</label>
                         </div>
                         <div className="form-check col-md-5 ml-4">
-                          <input className="form-check-input" type="radio" name="radio" value="CLINICA_CIRURGICA_2" onChange={event => setProcedencia(event.target.value)} id="idClinicaCirurgica2" />
+                          <input className="form-check-input" type="radio" name="radio" value="CLINICA_CIRURGICA_2" defaultChecked={procedencia==="CLINICA_CIRURGICA_2"} onChange={event => setProcedencia(event.target.value)} id="idClinicaCirurgica2" />
                           <label className="form-check-label" htmlFor="idClinicaCirurgica2">Clínica Cirúrgica II</label>
                         </div>
                         <div className="form-check col-md-5 ml-4">
-                          <input className="form-check-input" type="radio" name="radio" value="PEDIATRIA" onChange={event => setProcedencia(event.target.value)} id="idPediatria" />
+                          <input className="form-check-input" type="radio" name="radio" value="PEDIATRIA" defaultChecked={procedencia==="PEDIATRIA"} onChange={event => setProcedencia(event.target.value)} id="idPediatria" />
                           <label className="form-check-label" htmlFor="idPediatria">Pediatria</label>
                         </div>
                         <div className="form-check col-md-5 ml-4">
-                          <input className="form-check-input" type="radio" name="radio" value="ONCOLOGIA" onChange={event => setProcedencia(event.target.value)} id="idOncologia" />
+                          <input className="form-check-input" type="radio" name="radio" value="ONCOLOGIA" defaultChecked={procedencia==="ONCOLOGIA"} onChange={event => setProcedencia(event.target.value)} id="idOncologia" />
                           <label className="form-check-label" htmlFor="idOncologia">Oncologia</label>
                         </div>
                         <div className="form-check col-md-5 ml-4">
-                          <input className="form-check-input" type="radio" name="radio" value="UTI" onChange={event => setProcedencia(event.target.value)} id="idUti" />
+                          <input className="form-check-input" type="radio" name="radio" value="UTI" defaultChecked={procedencia==="UTI"} onChange={event => setProcedencia(event.target.value)} id="idUti" />
                           <label className="form-check-label" htmlFor="idUti">UTI</label>
                         </div>
                         <div className="form-check col-md-5 ml-4">
-                          <input className="form-check-input" type="radio" name="radio" value="AMBULATORIO" onChange={event => setProcedencia(event.target.value)} id="idAmbulatório" />
+                          <input className="form-check-input" type="radio" name="radio" value="AMBULATORIO" defaultChecked={procedencia==="AMBULATORIO"} onChange={event => setProcedencia(event.target.value)} id="idAmbulatório" />
                           <label className="form-check-label" htmlFor="idAmbulatório">Ambulatório</label>
                         </div>
                       </div>
@@ -494,11 +503,11 @@ export default function FormulariosAbertos() {
                       <h4>Acionamento da Equipe Médica</h4>
                       <div className="form-group">
                         <label htmlFor="idNomeMedicoChamado">Nome do médico chamado*</label>
-                        <select className="form-control" id="idNomeMedicoChamado" onChange={event => setCrm(event.target.value)} required>
+                        <select className="form-control" id="idNomeMedicoChamado" value={crm} onChange={event => setCrm(event.target.value)} required>
                           <option value="DEFAULT" disabled selected>-- Selecionar --</option>
                           {doctors.map(doctor => {
                             return (
-                              <option key={doctor.cpf} value={`${doctor.crm}`}>{doctor.nome}</option>
+                              <option key={doctor.cpf} value={doctor.crm}>{doctor.nome}</option>
                             )
                           })}
                         </select>
