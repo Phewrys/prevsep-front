@@ -343,9 +343,8 @@ export default function FormulariosSalvos() {
               <tr>
                 <th scope="col">Ações</th>
                 <th scope="col">Nº Formulário</th>
-                <th scope="col">*Nome do Paciente</th>
+                <th scope="col">Nome do Paciente</th>
                 <th scope="col">Data de Criação</th>
-                <th scope="col">STATUS</th>
               </tr>
             </thead>
             <tbody>
@@ -354,9 +353,8 @@ export default function FormulariosSalvos() {
                   <tr key={salvo.idFormulario}>
                     <td><a onClick={() => handlePutId(salvo.idFormulario)} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Editar"><i className="icon far fa-edit fa-1x"></i></a></td>
                     <td>{salvo.idFormulario}</td>
-                    <td>{salvo.paciente.idPaciente}</td>
+                    <td>{salvo.paciente.nome}</td>
                     <td>{salvo.dtCriacao}</td>
-                    <td>{salvo.status}</td>
                   </tr>
                 )
               })}
