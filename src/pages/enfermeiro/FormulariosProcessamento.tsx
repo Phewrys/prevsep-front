@@ -3,7 +3,7 @@ import ArrowDown from './../../content/img/arrow-down-solid.svg'
 var axios = require('axios')
 var qs = require('qs')
 
-interface JSONSalvos {
+interface JSONAbertos {
   idFormulario: number,
   paciente: {
     idPaciente: number,
@@ -35,9 +35,9 @@ interface JSONSalvos {
   status: string
 }
 
-export default function FormulariosSalvos() {
+export default function FormulariosProcessamento() {
 
-  let [salvos, setSalvos] = useState<JSONSalvos[]>([])
+  let [abertos, setAbertos] = useState<JSONAbertos[]>([])
 
   // GET: /api/v1/forms/sepse/nurse/form1 - Returns the nurse forms (part 1) in the database given a criteria.
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function FormulariosSalvos() {
 
     var config = {
       method: 'get',
-      url: 'https://prevsep.herokuapp.com/api/v1/forms/sepse/nurse/form1?status=SAVED',
+      url: 'https://prevsep.herokuapp.com/api/v1/forms/sepse/nurse/form1?status=CREATED',
       headers: {
         'accept': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -59,7 +59,7 @@ export default function FormulariosSalvos() {
 
     axios(config)
       .then(function (response: any) {
-        setSalvos(response.data.content)
+        setAbertos(response.data.content)
       })
       .catch(function (error: any) {
         console.log(error);
@@ -69,13 +69,13 @@ export default function FormulariosSalvos() {
   return (
     <>
       <div className="div-header">
-        <h2>Formulários Salvos</h2>
+        <h2>Formulários em Processamento</h2>
         <button type="button" className="btn button-blue">Novo Formulário +</button>
       </div>
       <div>
         <div className="div-content">
           <div className="m-2">
-            <small>Formulários ({salvos.length})</small><br /><small>Imprimir</small> <small>Exportar</small>
+            <small>Formulários ({abertos.length})</small><br /><small>Imprimir</small> <small>Exportar</small>
           </div>
           <table className="table table-hover">
             <thead>
@@ -89,15 +89,15 @@ export default function FormulariosSalvos() {
               </tr>
             </thead>
             <tbody>
-              {salvos.map(salvo => {
+              {abertos.map(aberto => {
                 return (
-                  <tr key={salvo.idFormulario}>
+                  <tr key={aberto.idFormulario}>
                     {/* <th scope="row"></th> */}
-                    <td>{salvo.idFormulario}</td>
-                    <td>{salvo.paciente.nome}</td>
-                    <td>{salvo.dtCriacao}</td>
-                    <td>{salvo.dtAcMedico}</td>
-                    <td>{salvo.status}</td>
+                    <td>{aberto.idFormulario}</td>
+                    <td>{aberto.paciente.nome}</td>
+                    <td>{aberto.dtCriacao}</td>
+                    <td>{aberto.dtAcMedico}</td>
+                    <td>{aberto.status}</td>
                   </tr>
                 )
               })}
