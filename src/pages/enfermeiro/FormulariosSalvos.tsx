@@ -267,7 +267,7 @@ export default function FormulariosSalvos() {
       });
   }
 
-  // GET/:id /api/v1/forms/sepse/doctor - Retorna os formulários dos médicos presentes no banco de dados a partir de um certo critério.
+  // GET/:id get data of saved form
   function handlePutId(id: number) {
 
     var data = qs.stringify({

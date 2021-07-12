@@ -41,7 +41,7 @@ interface JSONDoctors {
     statusUsuario: string
 }
 
-export default function FormulariosFinalizados() {
+export default function FormulariosProcessamento() {
     const token = localStorage.getItem('@PermissionPS:token');
 
     const [modalDefault, setModalDefaultShow] = useState(false)
