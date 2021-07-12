@@ -416,12 +416,11 @@ export default function FormulariosAbertos() {
   // POST - Salva o estado de um certo formulário no Sistema.
   async function handlePut(event: any) {
     event.preventDefault();
-
+    
     fetch(`https://prevsep.herokuapp.com/api/v1/doctors/${crm}/forms/sepse/${idFormulario}`, {
       method: `${PostPut}`,
       body: JSON.stringify({
         focoInfeccioso:{
-          pneumoniaEmpema: pneumoniaEmpema,
           infeccaoUrinaria: infeccaoUrinaria,
           infeccaoAbdominal: infeccaoAbdominal,
           menigite: menigite,
@@ -442,9 +441,9 @@ export default function FormulariosAbertos() {
         },
         bundleHora1:{
           iniciado: iniciado,
-          dtDisparo: "2021-07-11T18:52:57.130Z",
-          lactoDtColeta: "2021-07-11T18:52:57.130Z",
-          hemoculturaDtColeta: "2021-07-11T18:52:57.130Z",
+          dtDisparo: dtDisparo,
+          lactoDtColeta: lactoDtColeta,
+          hemoculturaDtColeta: hemoculturaDtColeta,
           antibioticoAmploAspectro: antibioticoAmploAspectro,
           cristaloides: cristaloides,
           vasopressores: vasopressores,
