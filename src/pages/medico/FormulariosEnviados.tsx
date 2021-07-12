@@ -81,7 +81,6 @@ export default function FormulariosEnviados() {
                                 <th scope="col">Nº Formulário</th>
                                 <th scope="col">Nome do Paciente</th>
                                 <th scope="col">Data de Criação</th>
-                                <th scope="col">Data de Autorização</th>
                                 <th scope="col">STATUS</th>
                             </tr>
                         </thead>
@@ -92,7 +91,6 @@ export default function FormulariosEnviados() {
                                         <td>{enviado.idFormulario}</td>
                                         <td>{enviado.paciente.nome}</td>
                                         <td>{enviado.dtCriacao}</td>
-                                        <td>{enviado.dtAcMedico}</td>
                                         <td>{enviado.status}</td>
                                     </tr>
                                 )
