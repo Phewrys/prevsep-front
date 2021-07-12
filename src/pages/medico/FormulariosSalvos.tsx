@@ -402,7 +402,6 @@ export default function FormulariosSalvos() {
       method: `${PostPut}`,
       body: JSON.stringify({
         focoInfeccioso:{
-          pneumoniaEmpema: pneumoniaEmpema,
           infeccaoUrinaria: infeccaoUrinaria,
           infeccaoAbdominal: infeccaoAbdominal,
           menigite: menigite,
@@ -423,9 +422,9 @@ export default function FormulariosSalvos() {
         },
         bundleHora1:{
           iniciado: iniciado,
-          dtDisparo: "2021-07-11T18:52:57.130Z",
-          lactoDtColeta: "2021-07-11T18:52:57.130Z",
-          hemoculturaDtColeta: "2021-07-11T18:52:57.130Z",
+          dtDisparo: dtDisparo,
+          lactoDtColeta: lactoDtColeta,
+          hemoculturaDtColeta: hemoculturaDtColeta,
           antibioticoAmploAspectro: antibioticoAmploAspectro,
           cristaloides: cristaloides,
           vasopressores: vasopressores,

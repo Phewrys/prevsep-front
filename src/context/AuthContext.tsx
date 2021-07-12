@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useState } from 'react'
 import api from '../services/api'
+import swal from 'sweetalert'
 var axios = require('axios')
 var qs = require('qs')
 
@@ -82,11 +83,24 @@ const AuthProvider: React.FC = ({children}) => {
 
           // REDIRECIONA O USUÁRIO PARA A ROTA QUE ELE TEM PERMISSÃO
           document.location.href = document.location.href + response.data.claims[0].roleName;
-        })
-        .catch(function (error: any) {
-          console.log(error);
-        });
 
+          swal({
+            title: "Login Iniciado!",
+            icon: "success",
+            buttons: [false],
+            timer: 5000,
+            })
+
+        }).catch((error: any) => {
+            console.log(error)
+
+            swal({
+            title: "Usuário ou Senha inválidos!",
+            icon: "error",
+            buttons: [false],
+            timer: 3000,
+            })
+        });
     }, []);
 
     const userLogged = useCallback(() => {
