@@ -72,8 +72,8 @@ export default function Enfermeiro() {
           <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a className="nav-link" id="criarFormulario-tab"          data-toggle="pill" href="#criarFormulario"          role="tab" aria-controls="criarFormulario"          aria-selected="false"><img src={IconeCriar} alt="Icone Criar Formulário" className="icone"></img>Criar Formulário</a>
             <a className="nav-link" id="formulariosSalvos-tab"        data-toggle="pill" href="#formulariosSalvos"        role="tab" aria-controls="formulariosSalvos"        aria-selected="false"><img src={IconeSalvos} alt="Icone Formulários Salvos" className="icone"></img>Forms Salvos</a>
-            <a className="nav-link" id="formulariosPendentes-tab"     data-toggle="pill" href="#formulariosPendentes"     role="tab" aria-controls="formulariosPendentes"     aria-selected="false"><img src={IconeAutorizados} alt="Icone Formulários para Autorização" className="icone"></img>Forms Pendentes</a>
             <a className="nav-link" id="formulariosProcessamento-tab" data-toggle="pill" href="#formulariosProcessamento" role="tab" aria-controls="formulariosProcessamento" aria-selected="false"><img src={IconeEmAberto} alt="Icone Formulários Abertos" className="icone"></img>Forms em Processamento</a>
+            <a className="nav-link" id="formulariosPendentes-tab"     data-toggle="pill" href="#formulariosPendentes"     role="tab" aria-controls="formulariosPendentes"     aria-selected="false"><img src={IconeAutorizados} alt="Icone Formulários para Autorização" className="icone"></img>Forms Pendentes</a>
             <a className="nav-link" id="formulariosFinalizados-tab"      data-toggle="pill" href="#formulariosFinalizados"      role="tab" aria-controls="formulariosFinalizados"      aria-selected="false"><img src={IconeEnviados} alt="Icone Formulários Enviados" className="icone"></img>Formulários Finalizados</a>
           </div>
         </div>
@@ -103,8 +103,8 @@ export default function Enfermeiro() {
           <div className="tab-content page-content" id="v-pills-tabContent">
             <div className="tab-pane fade" id="criarFormulario" role="tabpanel" aria-labelledby="criarFormulario-tab"><CriarFormulario /></div>
             <div className="tab-pane fade" id="formulariosSalvos" role="tabpanel" aria-labelledby="formulariosSalvos-tab"><FormulariosSalvos /></div>
-            <div className="tab-pane fade show active" id="formulariosPendentes" role="tabpanel" aria-labelledby="formulariosPendentes-tab"><FormulariosPendentes /></div>
             <div className="tab-pane fade" id="formulariosProcessamento" role="tabpanel" aria-labelledby="formulariosProcessamento-tab"><FormulariosProcessamento /></div>
+            <div className="tab-pane fade show active" id="formulariosPendentes" role="tabpanel" aria-labelledby="formulariosPendentes-tab"><FormulariosPendentes /></div>
             <div className="tab-pane fade" id="formulariosFinalizados" role="tabpanel" aria-labelledby="formulariosFinalizados-tab"><FormulariosFinalizados /></div>
           </div>
         </div>
