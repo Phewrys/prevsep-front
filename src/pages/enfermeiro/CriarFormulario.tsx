@@ -157,48 +157,75 @@ export default function CriarFormulario() {
   // POST: /api/v1/nurses/{cre}/forms/sepse - Creates a Sepse form.
   async function handlePost(event: any) {
     event.preventDefault();
+    let url = `https://prevsep.herokuapp.com/api/v1/nurses/${cre}/forms/sepse`
+    let data = JSON.stringify({
+      paciente: {
+        nome: nome,
+        idade: idade,
+        sexo: sexo,
+        leito: leito,
+        nrAtendimento: nAtm,
+        registro: registro,
+        cpf: cpf
+      },
+      crmMedico: crm,
+      procedencia: procedencia,
+      sirs: {
+        febreHipotemia: febreHipotemia,
+        leucocitoseLeucopenia: leucocitoseLeucopenia,
+        taquicardia: taquicardia,
+        taquipneia: taquipneia
+      },
+      disfOrganica: {
+        diurese: diurese,
+        hipotensao: hipotensao,
+        snlcConfAgtcComa: snlcConfAgtComa,
+        saturacaoDispneia: saturacaoDispneia
+      },
+      finalizado: finalizado
+    });
 
-    fetch(`https://prevsep.herokuapp.com/api/v1/nurses/${cre}/forms/sepse`, {
+    let config = {
       method: 'POST',
-      body: JSON.stringify({
-        paciente: {
-          nome: nome,
-          idade: idade,
-          sexo: sexo,
-          leito: leito,
-          nrAtendimento: nAtm,
-          registro: registro,
-          cpf: cpf
-        },
-        crmMedico: crm,
-        procedencia: procedencia,
-        sirs: {
-          febreHipotemia: febreHipotemia,
-          leucocitoseLeucopenia: leucocitoseLeucopenia,
-          taquicardia: taquicardia,
-          taquipneia: taquipneia
-        },
-        disfOrganica: {
-          diurese: diurese,
-          hipotensao: hipotensao,
-          snlcConfAgtcComa: snlcConfAgtComa,
-          saturacaoDispneia: saturacaoDispneia
-        },
-        finalizado: finalizado
-      }),
+      url: url,
       headers: {
         'accept': 'application/json',
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-    }).catch(function (error: any) {
-      console.log(error);
-    }).then(() => swal({
-      title: "Cadastrado com Sucesso!!!",
-      icon: "success",
-      buttons: [false],
-      timer: 3000,
-    }))
+      data: data
+    };
+
+    axios(config)
+      .then(function (response: any) {
+        swal({
+          title: "Processado com Sucesso!",
+          icon: "success",
+          buttons: [false],
+          timer: 2000,
+        });
+      })
+      .catch(function (error: any) {
+        try {
+          console.log('------------ ERROR ------------')
+          console.log(error.response.data);
+          console.log('------------ ----- ------------')
+          swal({
+            title: "Erro!",
+            text: error.response.data.message,
+            icon: "error",
+            buttons: [true]
+          });
+        }
+        catch (error: any) {
+          swal({
+            title: "Erro!",
+            icon: "error",
+            buttons: [true]
+          });
+          console.log(error);
+        }
+      });
   }
 
   return (
