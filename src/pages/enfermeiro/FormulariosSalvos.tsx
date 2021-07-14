@@ -199,46 +199,63 @@ export default function FormulariosSalvos() {
   async function handlePut(event: any) {
     event.preventDefault();
 
-    fetch(`https://prevsep.herokuapp.com/api/v1/nurses/${cre}/forms/sepse/${idFormulario}/form1`, {
+    let data = JSON.stringify({
+      paciente: {
+        nome: nome,
+        idade: idade,
+        sexo: sexo,
+        leito: leito,
+        nrAtendimento: nAtm,
+        registro: registro,
+        cpf: cpf
+      },
+      crmMedico: crm,
+      procedencia: procedencia,
+      sirs: {
+        febreHipotemia: febreHipotemia,
+        leucocitoseLeucopenia: leucocitoseLeucopenia,
+        taquicardia: taquicardia,
+        taquipneia: taquipneia
+      },
+      disfOrganica: {
+        diurese: diurese,
+        hipotensao: hipotensao,
+        snlcConfAgtcComa: snlcConfAgtcComa,
+        saturacaoDispneia: saturacaoDispneia
+      }
+    });
+
+    let config = {
       method: PostPut,
-      body: JSON.stringify({
-        paciente: {
-          nome: nome,
-          idade: idade,
-          sexo: sexo,
-          leito: leito,
-          nrAtendimento: nAtm,
-          registro: registro,
-          cpf: cpf
-        },
-        crmMedico: crm,
-        procedencia: procedencia,
-        sirs: {
-          febreHipotemia: febreHipotemia,
-          leucocitoseLeucopenia: leucocitoseLeucopenia,
-          taquicardia: taquicardia,
-          taquipneia: taquipneia
-        },
-        disfOrganica: {
-          diurese: diurese,
-          hipotensao: hipotensao,
-          snlcConfAgtcComa: snlcConfAgtcComa,
-          saturacaoDispneia: saturacaoDispneia
-        }
-      }),
+      url: `https://prevsep.herokuapp.com/api/v1/nurses/${cre}/forms/sepse/${idFormulario}/form1`,
       headers: {
         'accept': 'application/json',
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-    }).catch(function (error: any) {
-      console.log(error);
-    }).then(() => swal({
-      title: "Cadastrado com Sucesso!!!",
-      icon: "success",
-      buttons: [false],
-      timer: 3000,
-    }))
+      data: data
+    };
+
+    axios(config)
+      .then(function (response: any) {
+        swal({
+          title: "Processado com Sucesso!",
+          icon: "success",
+          buttons: [false],
+          timer: 2000,
+        });
+      })
+      .catch(function (error: any) {
+        console.log('------------ ERROR ------------')
+        console.log(error.response.data);
+        console.log('------------ ----- ------------')
+        swal({
+          title: "Erro!",
+          text: error.response.data.message,
+          icon: "error",
+          buttons: [true]
+        });
+      });
   }
 
   // GET: Get form for current nurse
