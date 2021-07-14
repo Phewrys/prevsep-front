@@ -246,15 +246,25 @@ export default function FormulariosSalvos() {
         });
       })
       .catch(function (error: any) {
-        console.log('------------ ERROR ------------')
-        console.log(error.response.data);
-        console.log('------------ ----- ------------')
-        swal({
-          title: "Erro!",
-          text: error.response.data.message,
-          icon: "error",
-          buttons: [true]
-        });
+        try {
+          console.log('------------ ERROR ------------')
+          console.log(error.response.data);
+          console.log('------------ ----- ------------')
+          swal({
+            title: "Erro!",
+            text: error.response.data.message,
+            icon: "error",
+            buttons: [true]
+          });
+        }
+        catch(error: any) {
+          swal({
+            title: "Erro!",
+            icon: "error",
+            buttons: [true]
+          });
+          console.log(error);
+        }
       });
   }
 
