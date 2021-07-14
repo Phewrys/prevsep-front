@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import swal from 'sweetalert'
+import Lupa from './../../content/img/lupa_preta.jpg'
 var axios = require('axios')
 var qs = require('qs')
 
@@ -195,52 +196,6 @@ export default function FormulariosProcessamento() {
             });
     }, [])
 
-    // POST or PUT: Update or finish form1
-    async function handlePut(event: any) {
-        event.preventDefault();
-
-        fetch(`https://prevsep.herokuapp.com/api/v1/nurses/${cre}/forms/sepse/${idFormulario}/form1`, {
-            method: PostPut,
-            body: JSON.stringify({
-                paciente: {
-                    nome: nome,
-                    idade: idade,
-                    sexo: sexo,
-                    leito: leito,
-                    nrAtendimento: nAtm,
-                    registro: registro,
-                    cpf: cpf
-                },
-                crmMedico: crm,
-                procedencia: procedencia,
-                sirs: {
-                    febreHipotemia: febreHipotemia,
-                    leucocitoseLeucopenia: leucocitoseLeucopenia,
-                    taquicardia: taquicardia,
-                    taquipneia: taquipneia
-                },
-                disfOrganica: {
-                    diurese: diurese,
-                    hipotensao: hipotensao,
-                    snlcConfAgtcComa: snlcConfAgtcComa,
-                    saturacaoDispneia: saturacaoDispneia
-                }
-            }),
-            headers: {
-                'accept': 'application/json',
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-        }).catch(function (error: any) {
-            console.log(error);
-        }).then(() => swal({
-            title: "Cadastrado com Sucesso!!!",
-            icon: "success",
-            buttons: [false],
-            timer: 3000,
-        }))
-    }
-
     // GET: Get forms for current nurse
     function formsSalvosNurse() {
 
@@ -343,7 +298,7 @@ export default function FormulariosProcessamento() {
                             {salvos.map(salvo => {
                                 return (
                                     <tr key={salvo.idFormulario}>
-                                        <td><a onClick={() => handlePutId(salvo.idFormulario)} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Visualizar"><i className="icon fas fa-search fa-1x"></i></a></td>
+                                        <td><a onClick={() => handlePutId(salvo.idFormulario)} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Visualizar"><img src={Lupa} alt="editar"></img></a></td>
                                         <td>{salvo.idFormulario}</td>
                                         <td>{salvo.paciente.nome}</td>
                                         <td>{salvo.dtCriacao}</td>
@@ -364,7 +319,7 @@ export default function FormulariosProcessamento() {
                 <Modal.Body style={{ background: '#fafdff' }}>
                     <div className="row">
                         <div className="col-md-10 offset-1">
-                            <form onSubmit={handlePut}>
+                            <form>
                                 <div className="container" style={{ marginTop: '20px' }}>
                                     <div className="row">
                                         <div className="col-md-12 col-lg-5 m-2">

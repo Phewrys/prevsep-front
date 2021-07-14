@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import swal from 'sweetalert'
+import Editar from './../../content/img/edit_preto.png'
 var axios = require('axios')
 var qs = require('qs')
 
@@ -158,7 +159,7 @@ export default function FormulariosPendentes() {
               {pendentes.map(pendente => {
                 return (
                   <tr key={pendente.idFormulario}>
-                    <td><a onClick={() => { setidFormularioPut(pendente.idFormulario); modalDefaultShow(); }} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Editar"><i className="icon far fa-edit fa-1x"></i></a></td>
+                    <td><a onClick={() => { setidFormularioPut(pendente.idFormulario); modalDefaultShow(); }} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Editar"><img src={Editar} alt='Editar'></img></a></td>
                     <td>{pendente.idFormulario}</td>
                     <td>{pendente.paciente.nome}</td>
                     <td>{pendente.dtCriacao}</td>

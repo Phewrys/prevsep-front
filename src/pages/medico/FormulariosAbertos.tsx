@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import swal from 'sweetalert'
 import Moment from 'moment'
+import Editar from './../../content/img/edit_preto.png'
 var axios = require('axios')
 var qs = require('qs')
 
@@ -504,7 +505,7 @@ export default function FormulariosAbertos() {
               {abertos.map(aberto => {
                 return (
                   <tr key={aberto.idFormulario}>
-                    <td><a onClick={() => handlePutId(aberto.idFormulario)} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Editar"><i className="icon far fa-edit fa-1x"></i></a></td>
+                    <td><a onClick={() => handlePutId(aberto.idFormulario)} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Editar"><img src={Editar} alt='Editar'></img></a></td>
                     <td>{aberto.idFormulario}</td>
                     <td>{aberto.paciente.nome}</td>
                     <td>{aberto.dtCriacao}</td>

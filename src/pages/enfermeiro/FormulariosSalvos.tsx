@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import swal from 'sweetalert'
+import Editar from './../../content/img/edit_preto.png'
 var axios = require('axios')
 var qs = require('qs')
 
@@ -199,46 +200,73 @@ export default function FormulariosSalvos() {
   async function handlePut(event: any) {
     event.preventDefault();
 
-    fetch(`https://prevsep.herokuapp.com/api/v1/nurses/${cre}/forms/sepse/${idFormulario}/form1`, {
+    let data = JSON.stringify({
+      paciente: {
+        nome: nome,
+        idade: idade,
+        sexo: sexo,
+        leito: leito,
+        nrAtendimento: nAtm,
+        registro: registro,
+        cpf: cpf
+      },
+      crmMedico: crm,
+      procedencia: procedencia,
+      sirs: {
+        febreHipotemia: febreHipotemia,
+        leucocitoseLeucopenia: leucocitoseLeucopenia,
+        taquicardia: taquicardia,
+        taquipneia: taquipneia
+      },
+      disfOrganica: {
+        diurese: diurese,
+        hipotensao: hipotensao,
+        snlcConfAgtcComa: snlcConfAgtcComa,
+        saturacaoDispneia: saturacaoDispneia
+      }
+    });
+
+    let config = {
       method: PostPut,
-      body: JSON.stringify({
-        paciente: {
-          nome: nome,
-          idade: idade,
-          sexo: sexo,
-          leito: leito,
-          nrAtendimento: nAtm,
-          registro: registro,
-          cpf: cpf
-        },
-        crmMedico: crm,
-        procedencia: procedencia,
-        sirs: {
-          febreHipotemia: febreHipotemia,
-          leucocitoseLeucopenia: leucocitoseLeucopenia,
-          taquicardia: taquicardia,
-          taquipneia: taquipneia
-        },
-        disfOrganica: {
-          diurese: diurese,
-          hipotensao: hipotensao,
-          snlcConfAgtcComa: snlcConfAgtcComa,
-          saturacaoDispneia: saturacaoDispneia
-        }
-      }),
+      url: `https://prevsep.herokuapp.com/api/v1/nurses/${cre}/forms/sepse/${idFormulario}/form1`,
       headers: {
         'accept': 'application/json',
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-    }).catch(function (error: any) {
-      console.log(error);
-    }).then(() => swal({
-      title: "Cadastrado com Sucesso!!!",
-      icon: "success",
-      buttons: [false],
-      timer: 3000,
-    }))
+      data: data
+    };
+
+    axios(config)
+      .then(function (response: any) {
+        swal({
+          title: "Processado com Sucesso!",
+          icon: "success",
+          buttons: [false],
+          timer: 2000,
+        });
+      })
+      .catch(function (error: any) {
+        try {
+          console.log('------------ ERROR ------------')
+          console.log(error.response.data);
+          console.log('------------ ----- ------------')
+          swal({
+            title: "Erro!",
+            text: error.response.data.message,
+            icon: "error",
+            buttons: [true]
+          });
+        }
+        catch(error: any) {
+          swal({
+            title: "Erro!",
+            icon: "error",
+            buttons: [true]
+          });
+          console.log(error);
+        }
+      });
   }
 
   // GET: Get form for current nurse
@@ -351,7 +379,7 @@ export default function FormulariosSalvos() {
               {salvos.map(salvo => {
                 return (
                   <tr key={salvo.idFormulario}>
-                    <td><a onClick={() => handlePutId(salvo.idFormulario)} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Editar"><i className="icon far fa-edit fa-1x"></i></a></td>
+                    <td><a onClick={() => handlePutId(salvo.idFormulario)} className="ml-3 w-100 text-primary" href="javascript:void(0);" title="Editar"><img src={Editar} alt='Editar'></img></a></td>
                     <td>{salvo.idFormulario}</td>
                     <td>{salvo.paciente.nome}</td>
                     <td>{salvo.dtCriacao}</td>
